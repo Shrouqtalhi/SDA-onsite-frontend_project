@@ -1,13 +1,23 @@
-import { ProductsManager } from './components/ProductsManager'
 import './App.css'
+import Header from './components/Header'
+import UsePage from './components/UserPage'
+import Sidebar from './components/Sidebar'
+import { Route, Routes } from 'react-router-dom'
+import Login from './components/Login'
+import BookById from './components/BookById'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <h1>Vite + React + Toolkit + Tailwind</h1>
-      <ProductsManager />
+    <div className="container">
+      <Header />
+      <div className="main">
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<UsePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/book/:id" element={<BookById />} />
+        </Routes>
+      </div>
     </div>
   )
 }
-
-export default App
