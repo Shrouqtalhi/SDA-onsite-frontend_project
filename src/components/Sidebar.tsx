@@ -1,50 +1,45 @@
-import { useState } from "react";
-import { FaHome, FaUser } from "react-icons/fa";
-import { ImSearch } from "react-icons/im";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { RootState } from "../redux/store";
+import { useState } from 'react'
+import { FaUser } from 'react-icons/fa'
+import { ImSearch } from 'react-icons/im'
+import { BiSolidBookAlt } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
 
 export default function Sidebar() {
-  const [activeButton, setActiveButton] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
 
-  const booksContent = useSelector((state: RootState) => state.books);
+  const [activeButton, setActiveButton] = useState<string | null>(null)
+
   const handleClick = (icon: string) => {
-    setActiveButton(icon);
-  };
-
-  const handleSearch = () => {
-    const filteredBooks = booksContent.books.filter((book) =>
-      book.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredBooks(filteredBooks);
-  };
+    setActiveButton(icon)
+  }
   return (
-    <nav className="sidebar">
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search books..."
-      />
-      ;
+    <nav className="navbar">
       <ImSearch
-        className={activeButton === "search" ? "active" : ""}
-        onClick={() => handleClick("search")}
+        className={activeButton === 'search' ? 'active' : ''}
+        onClick={() => handleClick('search')}
       />
+      <Link to="/contact">
+        <BiSolidBookAlt
+          className={activeButton === 'contact' ? 'active' : ''}
+          onClick={() => handleClick('contact')}
+        />
+      </Link>
       <Link to="/">
-        <FaHome
-          className={activeButton === "home" ? "active" : ""}
-          onClick={() => handleClick("home")}
+        <BiSolidBookAlt
+          className={activeButton === 'home' ? 'active' : ''}
+          onClick={() => handleClick('home')}
         />
       </Link>
-      <Link to="/login">
-        <FaUser
-          className={activeButton === "user" ? "active" : ""}
-          onClick={() => handleClick("user")}
-        />
-      </Link>
+      {!isLoggedIn && (
+        <Link to={`/login`}>
+          <FaUser
+            className={activeButton === 'admin' ? 'active' : ''}
+            onClick={() => handleClick('admin')}
+          />
+        </Link>
+      )}
     </nav>
-  );
+  )
 }
