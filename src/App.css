@@ -20,22 +20,18 @@ a {
 
 .container {
   max-width: 1500px;
-  /* max-height: 2000px; */
   margin: 0 auto;
 }
 
 .main {
-  /* background-color: #d3ad7f; */
   display: grid;
   grid-template-columns: 8rem 1fr;
   border-radius: 25px;
   padding: 10px;
   gap: 15px;
-  /* margin-top: 90px; */
-  /* height: auto; */
 }
 
-/* ********************************* */
+/* ********** Header ************** */
 
 .header {
   align-self: stretch;
@@ -71,8 +67,19 @@ a {
 .header h1::after {
   right: 0;
 }
+/* ********** NavBar ************* */
+.navbar {
+  background-color: rgb(71, 10, 10);
+  font-size: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  color: #383a3f;
+  background-color: #1a1d21;
+}
 
-/* ********************************* */
+/* ********** SideBar ************* */
 
 .sidebar {
   border-radius: 10px;
@@ -185,7 +192,7 @@ a {
   background-color: inherit;
 }
 
-/* ******************************* */
+/* ********* Login ************** */
 
 .login {
   display: flex;
@@ -283,15 +290,25 @@ h2 {
 .search-input {
   border-radius: 10px;
   margin: 0 auto;
-  font-size: 30px;
+  font-size: 40px;
   gap: 90px;
   color: #383a3f;
-  background-color: #1a1d21;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  margin-top: 30px;
 }
 
 .search-input input {
   align-items: center;
-  background-color: #1a1d21;
+  background-color: #010103;
+  color: #383a3f;
+  border-radius: 30px;
+  border: none;
+  padding: 5px;
+  border: 5px solid #252930;
 }
 
 /* ************ Add Form ************** */
@@ -303,6 +320,7 @@ h2 {
   align-items: center;
   gap: 20px;
   border: 1px solid #41434d;
+  background-color: #17191e;
 }
 
 .add-form input {

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { FaUser } from 'react-icons/fa'
 import { ImSearch } from 'react-icons/im'
+import { MdEmail } from 'react-icons/md'
 import { BiSolidBookAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 
-export default function Sidebar() {
+export default function Navbar() {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
 
   const [activeButton, setActiveButton] = useState<string | null>(null)
@@ -21,7 +22,7 @@ export default function Sidebar() {
         onClick={() => handleClick('search')}
       />
       <Link to="/contact">
-        <BiSolidBookAlt
+        <MdEmail
           className={activeButton === 'contact' ? 'active' : ''}
           onClick={() => handleClick('contact')}
         />
@@ -32,6 +33,7 @@ export default function Sidebar() {
           onClick={() => handleClick('home')}
         />
       </Link>
+
       {!isLoggedIn && (
         <Link to={`/login`}>
           <FaUser

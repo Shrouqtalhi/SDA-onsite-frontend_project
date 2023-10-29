@@ -1,9 +1,9 @@
-import AdminSidebar from './AdminSidebar'
+import UserSidebar from '../user/UserSidebar'
 
 export default function AdminBorrows() {
   return (
     <div className="main">
-      <AdminSidebar />
+      <UserSidebar />
       Borrow
     </div>
   )

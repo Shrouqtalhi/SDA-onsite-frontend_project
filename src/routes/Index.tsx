@@ -34,7 +34,7 @@ export default function Index() {
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashbord />} />
           <Route path="user/profile" element={<UserProfile />} />
-          <Route path="user/borrows" element={<UserBorrows />} />
+          <Route path="user/borrows" element={<Borrow />} />
           <Route path="user/books" element={<UserBooks />} />
         </Route>
 

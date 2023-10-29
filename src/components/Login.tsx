@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../redux/store'
 import { fetchUsers, login } from '../redux/slices/userSlice'
 import UserSidebar from '../user/UserSidebar'
 import { useNavigate } from 'react-router'
-import Sidebar from './Sidebar'
+import Sidebar from './Navbar'
 
 export default function Login({ pathName }: { pathName: string }) {
   const navigate = useNavigate()
