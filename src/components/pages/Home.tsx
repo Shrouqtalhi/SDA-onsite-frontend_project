@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { BsEyeglasses } from 'react-icons/bs'
-import { fetchBooks } from '../redux/slices/bookSlice'
+import { fetchBooks, searchBook } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
-import Sidebar from './Navbar'
-import Search from '../components/Search'
+import Sidebar from '../Navbar'
+import Search from '../Search'
 
 export default function Books() {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,10 +33,11 @@ export default function Books() {
   return (
     <>
       <Sidebar />
-      {/* <Search /> */}
+      <Search />
       {isLoading && <h3> Loading Books...</h3>}
       {error && <h3> {error}</h3>}
-      {/* <ul className="books">
+      {/* <FilterByStatus /> */}
+      <ul className="books">
         {filteredBooks.map((book) => (
           <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
             <img src={book.image} alt={book.title} />
@@ -47,15 +48,10 @@ export default function Books() {
                   <GiBookCover />
                 </button>
               </Link>
-              <Link to="/login">
-                <button className="borrow-btn">
-                  <BsEyeglasses />
-                </button>
-              </Link>
             </div>
           </li>
         ))}
-      </ul> */}
+      </ul>
     </>
   )
 }

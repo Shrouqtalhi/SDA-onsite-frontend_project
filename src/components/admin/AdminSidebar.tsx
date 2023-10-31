@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { FaHome, FaUser } from 'react-icons/fa'
-import { ImSearch } from 'react-icons/im'
-import { BiSolidBookAlt } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { AppDispatch, RootState } from '../redux/store'
@@ -35,10 +33,7 @@ export default function AdminSidebar() {
           </>
         ))}
       </div> */}
-      <ImSearch
-        className={activeButton === 'search' ? 'active' : ''}
-        onClick={() => handleClick('search')}
-      />
+
       <Link to="/dashboard/admin/books">
         <FaHome
           className={activeButton === 'book' ? 'active' : ''}

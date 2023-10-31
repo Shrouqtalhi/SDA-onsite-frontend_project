@@ -1,8 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { InitialStateUsers, Users } from '../../type/type'
-
-export const fetchUsers = createAsyncThunk('authers/fetchAuthors', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchusers', async () => {
   const res = await axios.get('/library/users.json')
   return res.data
 })
@@ -17,16 +16,26 @@ const initialState: InitialStateUsers = {
   isLoading: false,
   error: null,
   isLoggedIn: data.isLoggedIn,
-  userData: data.userData
+  userData: data.userData,
+  block: false
 }
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    addUser: (state, action) => {
+      state.users.push(action.payload)
+    },
     removeUser: (state, action: PayloadAction<Users>) => {
       const removeBook = state.users.filter((user) => user.id !== action.payload.id)
       state.users = removeBook
+    },
+    blockUser: (state, action: PayloadAction<Users>) => {
+      const foundUser = state.users.find((user) => user.id === action.payload.id)
+      if (foundUser) {
+        foundUser.block = !foundUser.block
+      }
     },
     login: (state, action) => {
       state.isLoggedIn = true
@@ -66,6 +75,6 @@ const usersSlice = createSlice({
   }
 })
 
-export const { login, logout, removeUser } = usersSlice.actions
+export const { login, logout, removeUser, blockUser, addUser } = usersSlice.actions
 
 export default usersSlice.reducer

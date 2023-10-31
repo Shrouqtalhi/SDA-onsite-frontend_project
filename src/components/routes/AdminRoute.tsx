@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { Outlet, useLocation } from 'react-router'
-import Login from '../components/Login'
+import Login from '../Login'
 
 export const AdminRoute = () => {
   const location = useLocation()

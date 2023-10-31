@@ -23,15 +23,6 @@ export default function UserSidebar() {
   }
   return (
     <nav className="sidebar">
-      {/* <div className="Admin-profile">
-        <h5>User</h5>
-        <p>name</p>
-        <p>email</p>
-      </div> */}
-      <ImSearch
-        className={activeButton === 'search' ? 'active' : ''}
-        onClick={() => handleClick('search')}
-      />
       <Link to="/dashboard/user/books">
         <FaHome
           className={activeButton === 'books' ? 'active' : ''}

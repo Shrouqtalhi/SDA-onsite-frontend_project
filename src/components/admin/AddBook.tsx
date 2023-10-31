@@ -1,9 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { addBook } from '../redux/slices/bookSlice'
 import AdminSidebar from './AdminSidebar'
 import { Book } from '../type/type'
-import { AppDispatch } from '../redux/store'
+import { AppDispatch, RootState } from '../redux/store'
 
 const initValue: Book = {
   id: 0,
@@ -57,7 +57,7 @@ export default function AddBook() {
         <h2>Add Book</h2>
 
         <label htmlFor="title" className="form-lable">
-          Book Title:{' '}
+          Book Title:
         </label>
         <input
           type="text"

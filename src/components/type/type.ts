@@ -18,20 +18,12 @@ export type InitialState = {
   error: null | string
   foundBook: Book | null
   search: string
+  borrowedBooks: Book[]
 }
 
 export type Author = {
   id: number
   name: string
-}
-
-export type Users = {
-  id: number
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  role: string
 }
 
 export type InitialStateAuthors = {
@@ -42,12 +34,23 @@ export type InitialStateAuthors = {
   search: string
 }
 
+export type Users = {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  role: string
+  block: boolean
+}
+
 export type InitialStateUsers = {
   users: Users[]
   isLoading: boolean
   error: string | null
   isLoggedIn: boolean
   userData: Users | null
+  block: boolean
 }
 
 export type fetchAuthersPendingAction = ReturnType<typeof fetchAuthors.pending>

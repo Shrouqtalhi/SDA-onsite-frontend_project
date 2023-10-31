@@ -1,6 +1,6 @@
 // import "./App.css";
-import Header from "./components/Header";
-import Index from "./routes/Index";
+import Header from './components/Header'
+import Index from './components/routes/Index'
 
 export default function App() {
   return (
@@ -8,5 +8,5 @@ export default function App() {
       <Header />
       <Index />
     </div>
-  );
+  )
 }

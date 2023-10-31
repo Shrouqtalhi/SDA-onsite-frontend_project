@@ -29,6 +29,7 @@ a {
   border-radius: 25px;
   padding: 10px;
   gap: 15px;
+  height: 100vh;
 }
 
 /* ********** Header ************** */
@@ -37,7 +38,7 @@ a {
   align-self: stretch;
 }
 
-.header h1 {
+.header h3 {
   color: #d3ad7f;
   text-transform: uppercase;
   text-align: center;
@@ -49,27 +50,26 @@ a {
   display: block;
 }
 
-.header h1::before,
-.header h1::after {
+.header h3::before,
+.header h3::after {
   display: block;
   content: '';
   height: 3px;
-  width: 20rem;
+  width: 15rem;
   background-color: #c0a689;
   position: absolute;
   top: calc(50% - 1px);
 }
 
-.header h1::before {
+.header h3::before {
   left: 0;
 }
 
-.header h1::after {
+.header h3::after {
   right: 0;
 }
 /* ********** NavBar ************* */
 .navbar {
-  background-color: rgb(71, 10, 10);
   font-size: 20px;
   padding: 20px;
   display: flex;
@@ -110,6 +110,7 @@ a {
   list-style: none;
   color: #fff;
   background-color: #17191e;
+  overflow: auto;
 }
 
 .books img {
@@ -158,7 +159,7 @@ a {
 
 .user-btn button {
   font-size: 20px;
-  align-self: stretch;
+  /* align-self: stretch; */
   padding: 5px;
   display: flex;
   gap: 5px;
@@ -168,7 +169,7 @@ a {
 
 .more-dtl-btn {
   background-color: #d1b591;
-  border-radius: 5px;
+  border-radius: 3px;
   border: none;
 }
 
@@ -192,43 +193,6 @@ a {
   background-color: inherit;
 }
 
-/* ********* Login ************** */
-
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #d3ad7f;
-  padding: 80px;
-  border-radius: 50px;
-  margin: 10rem;
-  width: 400px;
-}
-
-.login input {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 15px;
-  background-color: #010103;
-  color: #fff;
-}
-.login button {
-  align-self: stretch;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 15px;
-  border: 1px solid rgb(211, 173, 127);
-}
-.login button:hover {
-  background-color: rgb(211, 173, 127, 0.2);
-  border: 1px rgb(211, 173, 127);
-}
-
-.login input::placeholder {
-  color: #888;
-}
-
 /* *********************************** */
 
 h2 {
@@ -236,8 +200,9 @@ h2 {
 }
 .book-content-icon {
   font-size: 30px;
-  display: flex;
   padding: 20px;
+  margin: 30px;
+  height: 80vh;
   background-image: linear-gradient(160deg, #17191e, #1b1e24, #252930, #3a3f48, #41434d);
 }
 
@@ -247,25 +212,30 @@ h2 {
   justify-content: center;
   align-items: center;
   grid-template-columns: 1fr 300px;
-  gap: 8rem;
-  padding: 50px;
+  gap: 15rem;
+  padding: 0 90px;
   height: 80vh;
 }
 
 .home-icon {
   color: #c0a689;
+  font-size: 25px;
 }
 
+h5 span {
+  color: #363638;
+}
 .book-discription {
   display: flex;
   justify-content: center;
   align-items: left;
   flex-direction: column;
+  gap: 15px;
   font-family: 'Cormorant Garamond', serif;
 }
 
 .book-content img {
-  width: 20rem;
+  width: 21rem;
   filter: drop-shadow(20px 30px 40px #0c0e10);
   padding-right: 70px;
 }
@@ -277,9 +247,6 @@ h2 {
   gap: 20px;
 }
 
-/* @media screen and (max-width: ) {
-} */
-
 .users span {
   color: #41434d;
   font-size: small;
@@ -288,32 +255,41 @@ h2 {
 /* ************ Search **************** */
 
 .search-input {
-  border-radius: 10px;
-  margin: 0 auto;
-  font-size: 40px;
-  gap: 90px;
+  font-size: 20px;
   color: #383a3f;
-  /* background-color: red; */
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0;
+  justify-content: flex-start;
   margin-top: 30px;
+}
+
+.search-input p {
+  color: #c0a689;
+  font-size: 20px;
+  margin: 10px;
 }
 
 .search-input input {
   align-items: center;
   background-color: #010103;
-  color: #383a3f;
-  border-radius: 30px;
+  color: #fff;
+  border-radius: 10px;
   border: none;
   padding: 5px;
-  border: 5px solid #252930;
+  border: 3px solid #252930;
 }
 
-/* ************ Add Form ************** */
+.search-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 30px;
+}
+
+/* ************ Add Form + Login + Rigister ************** */
 
 .add-form {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -321,17 +297,18 @@ h2 {
   gap: 20px;
   border: 1px solid #41434d;
   background-color: #17191e;
+  padding: 100px;
+  font-size: 20px;
+  color: #383a3f;
 }
 
 .add-form input {
   width: 300px;
   padding: 5px;
   border-radius: 5px;
-  background-color: #f5eee5;
-}
-
-.add-form label {
-  align-items: left;
+  background-color: #41434d;
+  border: none;
+  color: #fff;
 }
 
 .add-btn {
@@ -340,4 +317,33 @@ h2 {
   border-radius: 5px;
   border: none;
   background-color: #c0a689;
+}
+.form-lable {
+  width: 300px;
+  color: #c0a689;
+}
+
+/* ********** users + authors List *********** */
+
+.lists {
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  background-color: #17191e;
+  align-items: center;
+  margin: 0;
+}
+
+.lists h2 {
+  align-items: center;
+}
+.users {
+  padding: 10px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-rows: auto; */
+  /* gap: 2.5rem; */
+  list-style: none;
+  color: #fff;
+  background-color: #17191e;
+  overflow: auto;
 }

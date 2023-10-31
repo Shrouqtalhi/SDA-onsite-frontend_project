@@ -3,7 +3,7 @@
     "id": 1,
     "image": "https://m.media-amazon.com/images/I/91asIC1fRwL._SL1500_.jpg",
     "title": "Introduction to Programming",
-    "description": "A beginner's guide to programming.",
+    "description": "A beginner's guide to programming.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 1,
     "isAvailable": false,
     "bookCopiesQty": 5
@@ -12,7 +12,7 @@
     "id": 2,
     "image": "https://m.media-amazon.com/images/I/5107+nK-zDL.jpg",
     "title": "Web Development Basics",
-    "description": "Learn the fundamentals of web development.",
+    "description": "Learn the fundamentals of web development.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 2,
     "isAvailable": false,
     "bookCopiesQty": 3
@@ -21,7 +21,7 @@
     "id": 3,
     "image": "https://m.media-amazon.com/images/I/813nURWkkbL._SL1500_.jpg",
     "title": "Data Structures and Algorithms",
-    "description": "In-depth coverage of data structures and algorithms.",
+    "description": "In-depth coverage of data structures and algorithms.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 3,
     "isAvailable": false,
     "bookCopiesQty": 7
@@ -30,7 +30,7 @@
     "id": 4,
     "image": "https://m.media-amazon.com/images/I/617R-j3Vk+L._SL1250_.jpg",
     "title": "Machine Learning Fundamentals",
-    "description": "Introduction to machine learning concepts.",
+    "description": "Introduction to machine learning concepts.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 4,
     "isAvailable": true,
     "bookCopiesQty": 4
@@ -39,7 +39,7 @@
     "id": 5,
     "image": "https://m.media-amazon.com/images/I/6153ole1OtL._SL1278_.jpg",
     "title": "Web Design Principles",
-    "description": "Learn the principles of web design.",
+    "description": "Learn the principles of web design.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 5,
     "isAvailable": false,
     "bookCopiesQty": 6
@@ -48,7 +48,7 @@
     "id": 6,
     "image": "https://m.media-amazon.com/images/I/71C0e9ggevL._SL1360_.jpg",
     "title": "Advanced JavaScript",
-    "description": "Master JavaScript programming.",
+    "description": "Master JavaScript programming.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus, felis nec semper iaculis, urna dolor tincidunt metus, ut laoreet nisl velit eu odio. Aliquam eu libero eu sem ultricies commodo. Sed eget congue quam. Etiam eu volutpat justo, id euismod elit. Vestibulum elementum accumsan consequat. Aliquam malesuada libero eu neque malesuada, vel tempor elit congue. Nam in justo et orci accumsan convallis.",
     "authorId": 1,
     "isAvailable": true,
     "bookCopiesQty": 8

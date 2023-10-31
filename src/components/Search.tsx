@@ -1,20 +1,32 @@
 import React, { ChangeEvent } from 'react'
-import { searchBook } from '../redux/slices/bookSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
+import { Link } from 'react-router-dom'
+import { AppDispatch, RootState } from './redux/store'
+import { searchBook } from './redux/slices/bookSlice'
 
 export default function Search() {
+  const dispatch: AppDispatch = useDispatch()
+
   const { search } = useSelector((state: RootState) => state.books)
 
-  const dispatch = useDispatch()
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchBook(e.target.value))
   }
   return (
-    <div className="search-input">
-      <p>Se</p>
-      <input type="text" value={search} onChange={handleSearch} className="" />
-      <p>|rch</p>
+    <div className="search-filter-bar">
+      <div className="search-input">
+        <p>Search:</p>
+        <input type="text" value={search} onChange={handleSearch} />
+      </div>
+
+      <div className="user-btn">
+        <Link to="/dashboard/user/available-book">
+          <button className="more-dtl-btn">Available Books</button>
+        </Link>
+        <Link to="/dashboard/user/books">
+          <button className="borrow-btn">All</button>
+        </Link>
+      </div>
     </div>
   )
 }

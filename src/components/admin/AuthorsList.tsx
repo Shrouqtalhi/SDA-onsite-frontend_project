@@ -5,44 +5,43 @@ import { TbHttpDelete } from 'react-icons/tb'
 import { PiNotePencilBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import AdminSidebar from './AdminSidebar'
-import { Users, autherDispatch } from '../type/type'
-import { fetchUsers, removeUser } from '../redux/slices/userSlice'
+import { fetchAuthors, removeAuthor } from '../redux/slices/authorsSlice'
+import { Author, autherDispatch } from '../type/type'
+import { BiPencil } from 'react-icons/bi'
 
-export default function UsersList() {
+export default function AuthersList() {
   const dispatch: AppDispatch = useDispatch()
-  const { users, isLoading, error } = useSelector((state: RootState) => state.users)
+  const { authors, isLoading, error } = useSelector((state: RootState) => state.authors)
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    dispatch(fetchAuthors())
   }, [dispatch])
 
-  const handleUserDelete = (id: Users) => {
-    dispatch(removeUser(id))
+  const handleAuthorDelete = (id: Author) => {
+    dispatch(removeAuthor(id))
   }
-
   return (
     <div className="main">
       <AdminSidebar />
-      {isLoading && <h3> Loading Users...</h3>}
+      {isLoading && <h3> Loading Authors...</h3>}
       {error && <h3> {error}</h3>}
+
+      {/* <h2>
+          <BiPencil />
+          Author List..
+        </h2> */}
       <ul className="books">
-        {users.length > 0 &&
-          users.map((user) => (
-            <li key={user.id} className="users">
-              <h4>{`${user.firstName} ${user.lastName}`}</h4>
-              <p>{user.email}</p>
-              <span>{user.role}</span>
+        {authors.length > 0 &&
+          authors.map((author) => (
+            <li key={author.id}>
+              <p>{author.name}</p>
               <div className="user-btn">
-                <Link to={`/book/${user.id}`}>
+                <Link to={`/book/${author.id}`}>
                   <button className="more-dtl-btn">
                     <PiNotePencilBold />
                   </button>
                 </Link>
-                <button
-                  className="delete"
-                  onClick={() => {
-                    handleUserDelete(user)
-                  }}>
+                <button className="delete" onClick={() => handleAuthorDelete(author)}>
                   <TbHttpDelete />
                 </button>
               </div>

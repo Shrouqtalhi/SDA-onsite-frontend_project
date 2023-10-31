@@ -12,7 +12,8 @@ const initialState: InitialState = {
   isLoading: false,
   error: null,
   foundBook: {} as Book,
-  search: ''
+  search: '',
+  borrowedBooks: []
 }
 
 const bookSlice = createSlice({
@@ -22,12 +23,11 @@ const bookSlice = createSlice({
     addBook: (state, action) => {
       state.books.push(action.payload)
     },
-    bookSuccess: (state) => {
-      state.isLoading = true
-    },
-    getBookData: (state, action: PayloadAction<Book[]>) => {
-      state.isLoading = false
-      state.books = action.payload
+    filterByStatus: (state, action: PayloadAction<{ isAvailable: true }>) => {
+      const filterByStatus = state.books.filter(
+        (book) => book.isAvailable === action.payload.isAvailable
+      )
+      state.books = filterByStatus
     },
     removeBook: (state, action: PayloadAction<Book>) => {
       const removeBook = state.books.filter((book) => book.id !== action.payload.id)
@@ -40,7 +40,7 @@ const bookSlice = createSlice({
       if (foundBook) {
         state.foundBook = foundBook
       } else {
-        console.error(`Book with id ${bookId} not found`)
+        console.error(`Book with id ${bookId} is not found`)
       }
     },
     searchBook: (state, action: PayloadAction<string>) => {
@@ -64,5 +64,4 @@ const bookSlice = createSlice({
 
 export default bookSlice.reducer
 
-export const { bookSuccess, getBookData, removeBook, findBookById, addBook, searchBook } =
-  bookSlice.actions
+export const { removeBook, findBookById, addBook, searchBook, filterByStatus } = bookSlice.actions

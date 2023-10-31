@@ -1,18 +1,21 @@
-import { useEffect } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { BsEyeglasses } from 'react-icons/bs'
-import { fetchBooks } from '../redux/slices/bookSlice'
+import { fetchBooks, searchBook } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
 import UserSidebar from './UserSidebar'
-import Search from '../components/Search'
+import Search from '../Search'
 
 export default function UserBooks() {
   const dispatch = useDispatch<AppDispatch>()
   const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
 
   const { authors } = useSelector((state: RootState) => state.authors)
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchBook(e.target.value))
+  }
 
   useEffect(() => {
     dispatch(fetchBooks())
