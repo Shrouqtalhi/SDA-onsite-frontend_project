@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 
 export default function EditBook() {
+  const { books } = useSelector((state: RootState) => state.books)
   const params = useParams()
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
-  const { books } = useSelector((state: RootState) => state.books)
   const book = books.find((book) => book.id === Number(params.id))
-  const [updateBook, setUpdateBook] = useState<Book>(book)
+  const [updateBook, setUpdateBook] = useState<Book>(book as Book)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -30,9 +30,8 @@ export default function EditBook() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log('updateBook', updateBook)
     dispatch(updatedBook(updateBook))
-    // navigate('/dashboard/admin')
+    navigate('/dashboard/admin')
   }
 
   return (

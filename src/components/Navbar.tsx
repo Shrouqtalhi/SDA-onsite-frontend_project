@@ -22,14 +22,14 @@ export default function Navbar() {
         <MdEmail
           className={activeButton === 'contact' ? 'active' : ''}
           onClick={() => handleClick('contact')}
-        />{' '}
+        />
         Contact Us
       </Link>
       <Link to="/">
         <BiSolidBookAlt
           className={activeButton === 'home' ? 'active' : ''}
           onClick={() => handleClick('home')}
-        />{' '}
+        />
         Books
       </Link>
 

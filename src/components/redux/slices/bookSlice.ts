@@ -31,13 +31,14 @@ const bookSlice = createSlice({
     },
     updatedBook: (state, action: PayloadAction<Book>) => {
       const updatedBook = action.payload
-      const books = state.books.map((book) => {
-        if (book.id === updatedBook) {
+      const updated = state.books.map((book) => {
+        if (book.id === updatedBook.id) {
           return updatedBook
         }
-        return books
+        return book
       })
-      state.books = books
+      state.books = updated
+      return state
     },
     removeBook: (state, action: PayloadAction<Book>) => {
       const removeBook = state.books.filter((book) => book.id !== action.payload.id)

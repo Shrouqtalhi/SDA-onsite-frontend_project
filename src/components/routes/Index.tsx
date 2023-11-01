@@ -18,6 +18,7 @@ import Register from '../pages/Register'
 import UserBorrows from '../user/UserBorrows'
 import FilterByStatus from '../FilterByStatus'
 import BorrowDetails from '../user/BorrowDetails'
+import ContactUs from '../pages/ContactUs'
 export default function Index() {
   return (
     <div>
@@ -44,6 +45,7 @@ export default function Index() {
           <Route path="admin/users" element={<UsersList />} />
         </Route>
 
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={<Login pathName={`/`} />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />

@@ -366,3 +366,19 @@ h5 span {
 .user li {
   list-style: none;
 }
+
+/* *********** Contact Us Page ************ */
+
+.main-contact {
+  background-color: red;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  padding: 50px;
+  letter-spacing: 20px;
+}
+
+.contact {
+  writing-mode: vertical-lr;
+  font-size: 60px;
+}
