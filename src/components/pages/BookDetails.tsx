@@ -44,12 +44,7 @@ export default function BookById() {
           </Link>
         ) : (
           <Link to={`/`}>
-            <FaHome
-              className="home-icon"
-              // onClick={() => {
-              //   navigate({})
-              // }}
-            />
+            <FaHome className="home-icon" />
           </Link>
         )}
 

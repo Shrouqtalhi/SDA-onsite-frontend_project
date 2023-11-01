@@ -24,7 +24,7 @@
     "email": "david.johnson@example.com",
     "password": "hashed_password",
     "role": "user",
-    "block": false
+    "block": true
   },
   {
     "id": 5,

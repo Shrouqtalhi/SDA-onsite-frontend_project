@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './redux/store'
 import { fetchBooks, filterByStatus } from './redux/slices/bookSlice'

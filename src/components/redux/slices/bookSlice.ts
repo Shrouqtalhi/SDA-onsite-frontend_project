@@ -20,7 +20,7 @@ const bookSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    addBook: (state, action) => {
+    addBook: (state, action: PayloadAction<Book>) => {
       state.books.push(action.payload)
     },
     filterByStatus: (state, action: PayloadAction<{ isAvailable: true }>) => {
@@ -28,6 +28,16 @@ const bookSlice = createSlice({
         (book) => book.isAvailable === action.payload.isAvailable
       )
       state.books = filterByStatus
+    },
+    updatedBook: (state, action: PayloadAction<Book>) => {
+      const updatedBook = action.payload
+      const books = state.books.map((book) => {
+        if (book.id === updatedBook) {
+          return updatedBook
+        }
+        return books
+      })
+      state.books = books
     },
     removeBook: (state, action: PayloadAction<Book>) => {
       const removeBook = state.books.filter((book) => book.id !== action.payload.id)
@@ -64,4 +74,5 @@ const bookSlice = createSlice({
 
 export default bookSlice.reducer
 
-export const { removeBook, findBookById, addBook, searchBook, filterByStatus } = bookSlice.actions
+export const { removeBook, findBookById, addBook, searchBook, filterByStatus, updatedBook } =
+  bookSlice.actions

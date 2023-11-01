@@ -1,10 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { addBook } from '../redux/slices/bookSlice'
 import AdminSidebar from './AdminSidebar'
 import { Book } from '../type/type'
-import { AppDispatch, RootState } from '../redux/store'
-
+import { AppDispatch } from '../redux/store'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router'
 const initValue: Book = {
   id: 0,
   image: '',
@@ -16,13 +16,9 @@ const initValue: Book = {
 }
 
 export default function AddBook() {
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const [add, setAdd] = useState<Book>(initValue)
-  //   const [auther, setAuther] = useState("");
-  //   const [image, setImage] = useState("");
-  //   const [description, setDescription] = useState("");
-  //   const [authorId, setAuthorId] = useState("");
-  //   const [bookCopiesQty, setBookCopiesQty] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -38,17 +34,17 @@ export default function AddBook() {
     e.preventDefault()
     const newBook = {
       id: new Date().getTime(),
+      authorId: 0,
       title: add.title,
-      autherId: new Date().getTime(),
       description: add.description,
       bookCopiesQty: add.bookCopiesQty,
+      isAvailable: true,
       image: add.image
     }
 
     dispatch(addBook(newBook))
-    console.log(add)
     setAdd(initValue)
-    // console.log(newBook);
+    navigate('/dashboard/admin')
   }
   return (
     <div className="main">
@@ -66,8 +62,21 @@ export default function AddBook() {
           value={add.title}
           onChange={handleChange}
         />
+        {/* <label htmlFor="discription" className="form-lable">
+          Author ID: :
+        </label>
 
-        <label htmlFor="discription">Book Discription:</label>
+        <input
+          type="text"
+          name="author"
+          placeholder="author"
+          value={add.authorId}
+          onChange={handleChange}
+        /> */}
+
+        <label htmlFor="discription" className="form-lable">
+          Book Discription:
+        </label>
         <input
           type="text"
           name="description"
@@ -76,7 +85,9 @@ export default function AddBook() {
           onChange={handleChange}
         />
 
-        <label htmlFor="discription">Book Copies:</label>
+        <label htmlFor="discription" className="form-lable">
+          Book Copies:
+        </label>
 
         <input
           type="number"
@@ -86,13 +97,12 @@ export default function AddBook() {
           onChange={handleChangeNumber}
         />
 
-        {/* <input
-          type="image"
-          name="image"
-          placeholder="image"
-          value={add.image}
-          onChange={handleChange}
-        /> */}
+        <label htmlFor="image" className="form-lable">
+          Image URL:
+        </label>
+        <div>
+          <input type="text" name="image" id="image" value={add.image} onChange={handleChange} />
+        </div>
         <button type="submit" className="add-btn">
           Add Book
         </button>

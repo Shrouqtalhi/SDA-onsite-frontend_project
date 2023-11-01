@@ -98,7 +98,7 @@ a {
   color: #e5c8a4;
 }
 
-/* ********************************* */
+/* ********* Books *************** */
 
 .books {
   border-radius: 10px;
@@ -127,7 +127,7 @@ a {
   font-size: 25px;
   font-family: inherit;
   /* background-color: #c0a689; */
-  background-image: linear-gradient(160deg, #1b1e24, #252930, #3a3f48, #41434d);
+  background-image: linear-gradient(160deg, #1b1e24, #343943, #c0a689, #e0c2a0);
   margin: 13px;
   border-radius: 5px;
 }
@@ -159,7 +159,6 @@ a {
 
 .user-btn button {
   font-size: 20px;
-  /* align-self: stretch; */
   padding: 5px;
   display: flex;
   gap: 5px;
@@ -180,10 +179,10 @@ a {
   border: none;
 }
 
-.user-btn button:hover {
+/* .user-btn button:hover {
   background-color: #17191e;
   color: #c0a689;
-}
+} */
 
 .delete {
   cursor: pointer;
@@ -193,7 +192,7 @@ a {
   background-color: inherit;
 }
 
-/* *********************************** */
+/* *********** Books *************** */
 
 h2 {
   color: #c0a689;
@@ -202,7 +201,7 @@ h2 {
   font-size: 30px;
   padding: 20px;
   margin: 30px;
-  height: 80vh;
+  height: 100vh;
   background-image: linear-gradient(160deg, #17191e, #1b1e24, #252930, #3a3f48, #41434d);
 }
 
@@ -346,4 +345,24 @@ h5 span {
   color: #fff;
   background-color: #17191e;
   overflow: auto;
+}
+
+/* ******* Author List ******** */
+
+.list-of-users {
+  padding: 40px;
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  gap: 20px;
+  background-color: #1a1d21;
+  font-size: 20px;
+}
+.user {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 30px;
+}
+
+.user li {
+  list-style: none;
 }

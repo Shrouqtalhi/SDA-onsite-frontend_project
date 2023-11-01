@@ -44,6 +44,15 @@ export type Users = {
   block: boolean
 }
 
+export type Borrows = {
+  id: number
+  borrowerId: number
+  bookId: number
+  borrowDate: string
+  returnDate: null
+  dueDate: string
+}
+
 export type InitialStateUsers = {
   users: Users[]
   isLoading: boolean
@@ -51,6 +60,13 @@ export type InitialStateUsers = {
   isLoggedIn: boolean
   userData: Users | null
   block: boolean
+}
+
+export type InitialStateBorrows = {
+  borrows: Borrows[]
+  isLoading: boolean
+  error: string | null
+  foundUser: Borrows | null
 }
 
 export type fetchAuthersPendingAction = ReturnType<typeof fetchAuthors.pending>

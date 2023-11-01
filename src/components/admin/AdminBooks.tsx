@@ -14,8 +14,10 @@ export default function AdminBooks() {
   const { books, isLoading, error } = useSelector((state: RootState) => state.books)
 
   useEffect(() => {
-    dispatch(fetchBooks())
-  }, [])
+    if (books.length === 0) {
+      dispatch(fetchBooks())
+    }
+  }, [dispatch])
 
   const handleBookDelete = (id: Book) => {
     dispatch(removeBook(id))
@@ -44,7 +46,7 @@ export default function AdminBooks() {
                       <GiBookCover />
                     </button>
                   </Link>
-                  <Link to="/dashboard/admin/edit">
+                  <Link to={`/dashboard/admin/edit/${book.id}`}>
                     <button className="borrow-btn">
                       <PiNotePencilBold />
                     </button>

@@ -1,22 +1,23 @@
-import { ChangeEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
-import { BsEyeglasses } from 'react-icons/bs'
-import { fetchBooks, searchBook } from '../redux/slices/bookSlice'
+import { fetchBooks } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
 import Sidebar from '../Navbar'
 import Search from '../Search'
 
-export default function Books() {
+export default function Home() {
   const dispatch = useDispatch<AppDispatch>()
   const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
 
   const { authors } = useSelector((state: RootState) => state.authors)
 
   useEffect(() => {
-    dispatch(fetchBooks())
-  }, [])
+    if (books.length === 0) {
+      dispatch(fetchBooks())
+    }
+  }, [dispatch])
 
   console.log(search)
   const filteredBooks = search
@@ -36,7 +37,6 @@ export default function Books() {
       <Search />
       {isLoading && <h3> Loading Books...</h3>}
       {error && <h3> {error}</h3>}
-      {/* <FilterByStatus /> */}
       <ul className="books">
         {filteredBooks.map((book) => (
           <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>

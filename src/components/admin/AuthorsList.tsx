@@ -6,7 +6,7 @@ import { PiNotePencilBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import AdminSidebar from './AdminSidebar'
 import { fetchAuthors, removeAuthor } from '../redux/slices/authorsSlice'
-import { Author, autherDispatch } from '../type/type'
+import { Author } from '../type/type'
 import { BiPencil } from 'react-icons/bi'
 
 export default function AuthersList() {
@@ -25,29 +25,30 @@ export default function AuthersList() {
       <AdminSidebar />
       {isLoading && <h3> Loading Authors...</h3>}
       {error && <h3> {error}</h3>}
-
-      {/* <h2>
+      <div className="list-of-users">
+        <h2>
           <BiPencil />
-          Author List..
-        </h2> */}
-      <ul className="books">
-        {authors.length > 0 &&
-          authors.map((author) => (
-            <li key={author.id}>
-              <p>{author.name}</p>
-              <div className="user-btn">
-                <Link to={`/book/${author.id}`}>
-                  <button className="more-dtl-btn">
-                    <PiNotePencilBold />
+          List of Authors..
+        </h2>
+        <ul className="user">
+          {authors.length > 0 &&
+            authors.map((author) => (
+              <h4 key={author.id}>
+                <p>{author.name}</p>
+                <div className="user-btn">
+                  <Link to={`/book/${author.id}`}>
+                    <button className="more-dtl-btn">
+                      <PiNotePencilBold />
+                    </button>
+                  </Link>
+                  <button className="delete" onClick={() => handleAuthorDelete(author)}>
+                    <TbHttpDelete />
                   </button>
-                </Link>
-                <button className="delete" onClick={() => handleAuthorDelete(author)}>
-                  <TbHttpDelete />
-                </button>
-              </div>
-            </li>
-          ))}
-      </ul>
+                </div>
+              </h4>
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }

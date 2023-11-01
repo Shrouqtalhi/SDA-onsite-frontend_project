@@ -34,7 +34,7 @@ export default function AdminSidebar() {
         ))}
       </div> */}
 
-      <Link to="/dashboard/admin/books">
+      <Link to="/dashboard/admin">
         <FaHome
           className={activeButton === 'book' ? 'active' : ''}
           onClick={() => handleClick('book')}

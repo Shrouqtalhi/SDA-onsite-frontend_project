@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { TbHttpDelete } from 'react-icons/tb'
-import { PiNotePencilBold } from 'react-icons/pi'
+import { PiNotePencilBold, PiUsersThreeDuotone, PiUsersThreeLight } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import AdminSidebar from './AdminSidebar'
 import { Users } from '../type/type'
@@ -27,21 +27,22 @@ export default function UsersList() {
   }
 
   return (
-    <>
-      <div className="main">
-        <AdminSidebar />
-        {isLoading && <h3> Loading Users...</h3>}
-        {error && <h3> {error}</h3>}
-
-        {/* <h2>List of users:</h2> */}
-        <ul className="books">
+    <div className="main">
+      <AdminSidebar />
+      {isLoading && <h3> Loading Users...</h3>}
+      {error && <h3> {error}</h3>}
+      <div className="list-of-users">
+        <h2>
+          <PiUsersThreeDuotone /> List of Users..
+        </h2>
+        <ul className="user">
           {users.length > 0 &&
             users.map((user) => {
               if (user.role !== 'admin') {
                 return (
-                  <li key={user.id} className="users">
-                    <h4>{`${user.firstName} ${user.lastName}`}</h4>
-                    <p>{user.email}</p>
+                  <li key={user.id}>
+                    <h5>{`${user.firstName} ${user.lastName}`}</h5>
+                    <span>{user.email}</span>
                     <span>{user.role}</span>
                     <div className="user-btn">
                       <Link to={`/book/${user.id}`}>
@@ -62,7 +63,11 @@ export default function UsersList() {
                         onClick={() => {
                           handleUserBlock(user)
                         }}>
-                        {user.block ? 'unblock' : <ImBlocked />}
+                        {user.block ? (
+                          <ImBlocked style={{ color: 'red' }} />
+                        ) : (
+                          <ImBlocked style={{ color: '#41434d' }} />
+                        )}
                       </button>
                     </div>
                   </li>
@@ -71,6 +76,6 @@ export default function UsersList() {
             })}
         </ul>
       </div>
-    </>
+    </div>
   )
 }

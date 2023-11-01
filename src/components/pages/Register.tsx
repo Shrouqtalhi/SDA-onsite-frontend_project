@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { addUser, fetchUsers } from '../redux/slices/userSlice'
@@ -10,7 +10,7 @@ export default function Register() {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
-  const { users, isLoading, error } = useSelector((state: RootState) => state.users)
+  const { users } = useSelector((state: RootState) => state.users)
 
   const initState = {
     firstName: '',
