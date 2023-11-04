@@ -19,7 +19,6 @@ export default function Home() {
     }
   }, [dispatch])
 
-  console.log(search)
   const filteredBooks = search
     ? books.filter((book) => {
         const matchingAuthor = authors.find((author) => author.id === book.authorId)
@@ -29,7 +28,6 @@ export default function Home() {
         )
       })
     : books
-  console.log(filteredBooks)
 
   return (
     <>

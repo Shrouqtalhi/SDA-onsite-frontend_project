@@ -1,12 +1,25 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import UserSidebar from './UserSidebar'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store'
+
+import { Link } from 'react-router-dom'
+import { Book, Borrows } from '../type/type'
 
 export default function UserBorrows() {
-  const handelChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
+  const state = useSelector((state: RootState) => state)
+  console.log('state', state)
+  const books = state.books
+  const users = state.users
+  const borrows = state.borrows
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    // setAdd({ ...add, [name]: value })
   }
-  const handleSubmit = () => {
-    console.log('')
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+
+    // dispatch(addToBorrow())
   }
 
   return (
@@ -14,13 +27,15 @@ export default function UserBorrows() {
       <UserSidebar />
       <form className="add-form" onSubmit={handleSubmit}>
         <h2>Borrow Book:</h2>
-        <label htmlFor="discription">Borrow Date:</label>
-        <input type="date" name="borrow" placeholder="Title" onChange={handelChange} />
-        <label htmlFor="discription">Return Date:</label>
-        <input type="date" name="return" placeholder="Book Description" onChange={handelChange} />
+        <label htmlFor="borrowDate">Borrow Date:</label>
+        <input type="date" name="borrow" placeholder="Title" onChange={handleChange} />
+        <label htmlFor="dueDate">Due Date:</label>
+        <input type="date" name="return" placeholder="Book Description" onChange={handleChange} />
+        {/* <Link to="/dashboard/user/borrow-details"> */}
         <button type="submit" className="add-btn">
           Borrow
         </button>
+        {/* </Link> */}
       </form>
     </div>
   )

@@ -1,4 +1,3 @@
-import React from 'react'
 import UserSidebar from '../user/UserSidebar'
 
 export default function UserDashbord() {

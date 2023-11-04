@@ -1,21 +1,21 @@
-import { ChangeEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { BsEyeglasses } from 'react-icons/bs'
-import { fetchBooks, searchBook } from '../redux/slices/bookSlice'
+import { fetchBooks } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
 import UserSidebar from './UserSidebar'
 import Search from '../Search'
+import Navbar from '../Navbar'
+import { addToBorrow } from '../redux/slices/borrowSlice'
 
 export default function UserBooks() {
   const dispatch = useDispatch<AppDispatch>()
   const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
+  const { borrowbooks } = useSelector((state: RootState) => state.borrows)
 
-  const { authors } = useSelector((state: RootState) => state.authors)
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchBook(e.target.value))
-  }
+  console.log(borrowbooks)
 
   useEffect(() => {
     dispatch(fetchBooks())
@@ -24,17 +24,13 @@ export default function UserBooks() {
   // Search
   const filteredBooks = search
     ? books.filter((book) => {
-        const author = authors.find((author) => author.id === book.authorId)
-        return (
-          book.title.toLowerCase().includes(search.toLowerCase()) ||
-          (author && author.name.toLowerCase().includes(search.toLowerCase()))
-        )
+        return book.title.toLowerCase().includes(search.toLowerCase())
       })
     : books
-  console.log(filteredBooks)
 
   return (
     <>
+      <Navbar />
       <Search />
       <div className="main">
         <UserSidebar />
@@ -52,11 +48,13 @@ export default function UserBooks() {
                       <GiBookCover />
                     </button>
                   </Link>
-                  <Link to="/dashboard/user/borrows">
-                    <button className="borrow-btn">
+                  {book.isAvailable && (
+                    // <Link to={`/dashboard/user/borrowbook/${book.id}`}>
+                    <button className="borrow-btn" onClick={() => dispatch(addToBorrow(book))}>
                       <BsEyeglasses />
                     </button>
-                  </Link>
+                    // </Link>
+                  )}
                 </div>
               </li>
             ))}

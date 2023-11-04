@@ -1,26 +1,41 @@
 import { useDispatch, useSelector } from 'react-redux'
+import UserSidebar from './UserSidebar'
 import { AppDispatch, RootState } from '../redux/store'
-import { useEffect } from 'react'
-import { fetchBorrows } from '../redux/slices/borrowSlice'
+import { Link } from 'react-router-dom'
+import { TbHttpDelete } from 'react-icons/tb'
+import { removeFromBorrow } from '../redux/slices/borrowSlice'
+import { Book } from '../type/type'
 
 export default function BorrowDetails() {
-  const { borrows, error, isLoading, foundUser } = useSelector((state: RootState) => state.borrows)
-  const { users } = useSelector((state: RootState) => state.users)
-  const { books, foundBook } = useSelector((state: RootState) => state.books)
   const dispatch: AppDispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchBorrows())
-  }, [dispatch])
+  const { borrowbooks } = useSelector((state: RootState) => state.borrows)
 
-  console.log(borrows)
-
-  const user = users.filter((user) => user.id === foundUser?.id)
-  const book = books.filter((book) => book.id === foundBook?.id)
-
+  const handleBookDelete = (id: Book) => {
+    dispatch(removeFromBorrow(id))
+  }
   return (
-    <div>
-      BorrowDetails
-      {/* {user & book} */}
+    <div className="main">
+      <UserSidebar />
+      <ul className="books">
+        {borrowbooks.length > 0 &&
+          borrowbooks.map((book) => (
+            <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
+              <img src={book.image} alt={book.title} />
+              <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
+              <div className="user-btn">
+                <button
+                  className="delete"
+                  onClick={() => {
+                    handleBookDelete(book)
+                  }}>
+                  <label htmlFor="my-bton" title="delete">
+                    <TbHttpDelete />
+                  </label>
+                </button>
+              </div>
+            </li>
+          ))}
+      </ul>
     </div>
   )
 }

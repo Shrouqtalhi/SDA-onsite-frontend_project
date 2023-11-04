@@ -18,7 +18,6 @@ export type InitialState = {
   error: null | string
   foundBook: Book | null
   search: string
-  borrowedBooks: Book[]
 }
 
 export type Author = {
@@ -60,13 +59,15 @@ export type InitialStateUsers = {
   isLoggedIn: boolean
   userData: Users | null
   block: boolean
+  foundUser: Users | null
+  borrowedBooks: Book[]
 }
 
 export type InitialStateBorrows = {
   borrows: Borrows[]
+  borrowbooks: Book[]
   isLoading: boolean
   error: string | null
-  foundUser: Borrows | null
 }
 
 export type fetchAuthersPendingAction = ReturnType<typeof fetchAuthors.pending>

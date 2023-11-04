@@ -8,7 +8,6 @@ import { fetchAuthors } from '../redux/slices/authorsSlice'
 import { FaHome } from 'react-icons/fa'
 
 export default function BookById() {
-  const navigate = useNavigate()
   const { id } = useParams()
   const dispatch: AppDispatch = useDispatch()
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
@@ -35,12 +34,7 @@ export default function BookById() {
       <div className="book-content-icon">
         {isLoggedIn ? (
           <Link to={`/dashboard/${userData?.role}`}>
-            <FaHome
-              className="home-icon"
-              // onClick={() => {
-              //   navigate({})
-              // }}
-            />
+            <FaHome className="home-icon" />
           </Link>
         ) : (
           <Link to={`/`}>

@@ -12,8 +12,7 @@ const initialState: InitialState = {
   isLoading: false,
   error: null,
   foundBook: {} as Book,
-  search: '',
-  borrowedBooks: []
+  search: ''
 }
 
 const bookSlice = createSlice({
@@ -65,7 +64,6 @@ const bookSlice = createSlice({
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         ;(state.isLoading = false), (state.books = action.payload)
-        console.log(action.payload)
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         ;(state.isLoading = false), (state.error = action.error.message || 'An error occured')

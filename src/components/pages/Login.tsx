@@ -1,15 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from './redux/store'
-import { fetchUsers, login } from './redux/slices/userSlice'
-import UserSidebar from './user/UserSidebar'
-import { useNavigate, useParams } from 'react-router'
-import Sidebar from './Navbar'
+import { AppDispatch, RootState } from '../redux/store'
+import { fetchUsers, login } from '../redux/slices/userSlice'
+import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router'
+import Sidebar from '../Navbar'
 import { Link } from 'react-router-dom'
 
 export default function Login({ pathName }: { pathName: string }) {
   const navigate = useNavigate()
-  const { role } = useParams()
   const { users } = useSelector((state: RootState) => state.users)
   const dispatch: AppDispatch = useDispatch()
 
@@ -30,7 +29,6 @@ export default function Login({ pathName }: { pathName: string }) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     try {
-      console.log(user)
       const foundUser = users.find((userData) => userData.email === user.email)
       if (!foundUser) {
         console.log('Wrong Email or Password')

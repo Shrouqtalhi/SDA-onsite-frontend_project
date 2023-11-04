@@ -34,11 +34,9 @@ export default function Register() {
 
     dispatch(fetchUsers()).then(() => dispatch(addUser(newUser)))
 
-    console.log(newUser)
     setUser(initState)
     navigate('/login')
   }
-  console.log(users)
   return (
     <div>
       <Navbar />

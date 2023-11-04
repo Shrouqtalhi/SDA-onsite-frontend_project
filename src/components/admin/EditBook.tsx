@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { addBook } from '../redux/slices/bookSlice'
 import AdminSidebar from './AdminSidebar'
 import { Book } from '../type/type'
 import { updatedBook } from '../redux/slices/bookSlice'

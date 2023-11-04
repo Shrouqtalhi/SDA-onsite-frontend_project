@@ -36,6 +36,7 @@ a {
 
 .header {
   align-self: stretch;
+  margin-bottom: 50px;
 }
 
 .header h3 {
@@ -77,6 +78,7 @@ a {
   gap: 70px;
   color: #383a3f;
   background-color: #1a1d21;
+  margin-bottom: 10px;
 }
 
 /* ********** SideBar ************* */
@@ -119,18 +121,14 @@ a {
 }
 
 .add-new-book {
-  font-size: 30px;
-}
-
-.add-new-book button {
   width: 150px;
   font-size: 25px;
   font-family: inherit;
-  /* background-color: #c0a689; */
   background-image: linear-gradient(160deg, #1b1e24, #343943, #c0a689, #e0c2a0);
   margin: 13px;
   border-radius: 5px;
 }
+
 .book.sold-out {
   color: #888;
 }
@@ -163,7 +161,6 @@ a {
   display: flex;
   gap: 5px;
   margin-top: 20px;
-  text-transform: uppercase;
 }
 
 .more-dtl-btn {
@@ -178,11 +175,6 @@ a {
   border-radius: 5px;
   border: none;
 }
-
-/* .user-btn button:hover {
-  background-color: #17191e;
-  color: #c0a689;
-} */
 
 .delete {
   cursor: pointer;
@@ -288,17 +280,16 @@ h5 span {
 /* ************ Add Form + Login + Rigister ************** */
 
 .add-form {
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  border: 1px solid #41434d;
   background-color: #17191e;
   padding: 100px;
   font-size: 20px;
   color: #383a3f;
+  border-radius: 10px;
 }
 
 .add-form input {
@@ -370,15 +361,38 @@ h5 span {
 /* *********** Contact Us Page ************ */
 
 .main-contact {
-  background-color: red;
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
+  background-color: #17191e;
+  color: #343943;
+  border-radius: 10px;
   padding: 50px;
-  letter-spacing: 20px;
+  font-size: 20px;
 }
 
 .contact {
-  writing-mode: vertical-lr;
+  /* writing-mode: vertical-lr; */
+  color: #c0a689;
   font-size: 60px;
+  margin-bottom: 20px;
+}
+.contact-dtl {
+  color: #343943;
+}
+
+/* *********** Borrows List ********** */
+
+.borrow-date {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  gap: 5px;
+}
+.borrow-date p {
+  color: #c0a689;
+}
+.borrow-date span {
+  color: #fff;
 }

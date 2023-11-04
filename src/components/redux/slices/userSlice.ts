@@ -17,7 +17,9 @@ const initialState: InitialStateUsers = {
   error: null,
   isLoggedIn: data.isLoggedIn,
   userData: data.userData,
-  block: false
+  block: false,
+  foundUser: {} as Users,
+  borrowedBooks: []
 }
 
 const usersSlice = createSlice({
@@ -26,6 +28,17 @@ const usersSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       state.users.push(action.payload)
+    },
+    updatedUser: (state, action: PayloadAction<Users>) => {
+      const updatedUser = action.payload
+      const updated = state.users.map((user) => {
+        if (user.id === updatedUser.id) {
+          return updatedUser
+        }
+        return user
+      })
+      state.users = updated
+      return state
     },
     removeUser: (state, action: PayloadAction<Users>) => {
       const removeBook = state.users.filter((user) => user.id !== action.payload.id)
@@ -37,6 +50,7 @@ const usersSlice = createSlice({
         foundUser.block = !foundUser.block
       }
     },
+
     login: (state, action) => {
       state.isLoggedIn = true
       state.userData = action.payload
@@ -67,7 +81,6 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         ;(state.isLoading = false), (state.users = action.payload)
-        console.log(action.payload)
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         ;(state.isLoading = false), (state.error = action.error.message || 'An error occured')
@@ -75,6 +88,6 @@ const usersSlice = createSlice({
   }
 })
 
-export const { login, logout, removeUser, blockUser, addUser } = usersSlice.actions
+export const { login, logout, removeUser, blockUser, addUser, updatedUser } = usersSlice.actions
 
 export default usersSlice.reducer

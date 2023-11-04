@@ -2,15 +2,14 @@ import { useState } from 'react'
 import { FaHome, FaUser } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { AppDispatch, RootState } from '../redux/store'
+import { AppDispatch } from '../redux/store'
 import { fetchUsers, logout } from '../redux/slices/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BsPencilSquare } from 'react-icons/bs'
 
 export default function AdminSidebar() {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
-  const { users } = useSelector((state: RootState) => state.users)
   const [activeButton, setActiveButton] = useState<string | null>(null)
   const handleClick = (icon: string) => {
     setActiveButton(icon)
@@ -24,16 +23,6 @@ export default function AdminSidebar() {
 
   return (
     <nav className="sidebar">
-      {/* <div className="user-profile">
-        {users.map((user) => (
-          <>
-            <h5>{user.firstName}</h5>
-            <p>name</p>
-            <p>email</p>
-          </>
-        ))}
-      </div> */}
-
       <Link to="/dashboard/admin">
         <FaHome
           className={activeButton === 'book' ? 'active' : ''}
@@ -47,12 +36,12 @@ export default function AdminSidebar() {
         />
       </Link>
 
-      {/* <Link to="/dashboard/admin/borrows">
+      <Link to="/dashboard/admin/borrows">
         <FaUser
           className={activeButton === 'borrow' ? 'active' : ''}
           onClick={() => handleClick('borrow')}
         />
-      </Link> */}
+      </Link>
       <Link to="/dashboard/admin/users">
         <FaUser
           className={activeButton === 'users' ? 'active' : ''}

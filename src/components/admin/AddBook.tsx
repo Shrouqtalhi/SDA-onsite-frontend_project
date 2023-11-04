@@ -50,7 +50,7 @@ export default function AddBook() {
     <div className="main">
       <AdminSidebar />
       <form onSubmit={handleSubmit} className="add-form">
-        <h2>Add Book</h2>
+        <h2>New Book</h2>
 
         <label htmlFor="title" className="form-lable">
           Book Title:
@@ -62,17 +62,6 @@ export default function AddBook() {
           value={add.title}
           onChange={handleChange}
         />
-        {/* <label htmlFor="discription" className="form-lable">
-          Author ID: :
-        </label>
-
-        <input
-          type="text"
-          name="author"
-          placeholder="author"
-          value={add.authorId}
-          onChange={handleChange}
-        /> */}
 
         <label htmlFor="discription" className="form-lable">
           Book Discription:

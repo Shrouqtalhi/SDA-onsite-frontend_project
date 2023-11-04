@@ -33,7 +33,7 @@ export default function UsersList() {
       {error && <h3> {error}</h3>}
       <div className="list-of-users">
         <h2>
-          <PiUsersThreeDuotone /> List of Users..
+          <PiUsersThreeDuotone /> Users..
         </h2>
         <ul className="user">
           {users.length > 0 &&
@@ -45,7 +45,7 @@ export default function UsersList() {
                     <span>{user.email}</span>
                     <span>{user.role}</span>
                     <div className="user-btn">
-                      <Link to={`/book/${user.id}`}>
+                      <Link to={`dashboard/admin/edit-user/${user.id}`}>
                         <button className="more-dtl-btn">
                           <PiNotePencilBold />
                         </button>

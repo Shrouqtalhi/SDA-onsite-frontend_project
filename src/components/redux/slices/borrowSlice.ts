@@ -1,23 +1,40 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { Borrows, InitialStateBorrows } from '../../type/type'
+import { InitialStateBorrows, Users } from '../../type/type'
 
 export const fetchBorrows = createAsyncThunk('users/fetchBorrows', async () => {
   const res = await axios.get('/library/borrows.json')
   return res.data
 })
+export const fetchBooks = createAsyncThunk('users/fetchBooks', async () => {
+  const res = await axios.get('/library/books.json')
+  return res.data
+})
+
+// const data =
+//   localStorage.getItem('cart') !== null ? JSON.parse(String(localStorage.getItem('cart'))) : []
 
 const initialState: InitialStateBorrows = {
   borrows: [],
+  borrowbooks: [],
   isLoading: false,
-  error: null,
-  foundUser: {} as Borrows
+  error: null
 }
 
-const bookSlice = createSlice({
+const borrowSlice = createSlice({
   name: 'borrow',
   initialState,
-  reducers: {},
+  reducers: {
+    addToBorrow: (state, action) => {
+      const book = action.payload
+      state.borrowbooks.push(book)
+      return state
+    },
+    removeFromBorrow: (state, action) => {
+      const removeBook = state.borrowbooks.filter((book) => book.id !== action.payload.id)
+      state.borrowbooks = removeBook
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBorrows.pending, (state) => {
@@ -33,6 +50,6 @@ const bookSlice = createSlice({
   }
 })
 
-export default bookSlice.reducer
+export default borrowSlice.reducer
 
-// export const {} = bookSlice.actions
+export const { removeFromBorrow, addToBorrow } = borrowSlice.actions

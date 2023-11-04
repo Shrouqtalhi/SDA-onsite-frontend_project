@@ -19,6 +19,20 @@ const authorsSlice = createSlice({
   name: 'authors',
   initialState,
   reducers: {
+    addAuthor: (state, action: PayloadAction<Author>) => {
+      state.authors.push(action.payload)
+    },
+    updatedAuthor: (state, action: PayloadAction<Author>) => {
+      const updatedAuthor = action.payload
+      const updated = state.authors.map((author) => {
+        if (author.id === updatedAuthor.id) {
+          return updatedAuthor
+        }
+        return author
+      })
+      state.authors = updated
+      return state
+    },
     removeAuthor: (state, action: PayloadAction<Author>) => {
       const removeAuthor = state.authors.filter((author) => author.id !== action.payload.id)
       state.authors = removeAuthor
@@ -31,7 +45,6 @@ const authorsSlice = createSlice({
       })
       .addCase(fetchAuthors.fulfilled, (state, action) => {
         ;(state.isLoading = false), (state.authors = action.payload)
-        console.log(action.payload)
       })
       .addCase(fetchAuthors.rejected, (state, action) => {
         ;(state.isLoading = false), (state.error = action.error.message || 'An error occured')
@@ -41,4 +54,4 @@ const authorsSlice = createSlice({
 
 export default authorsSlice.reducer
 
-export const { removeAuthor } = authorsSlice.actions
+export const { addAuthor, updatedAuthor, removeAuthor } = authorsSlice.actions

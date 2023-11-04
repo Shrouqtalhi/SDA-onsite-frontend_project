@@ -25,11 +25,10 @@ export default function AdminBooks() {
 
   return (
     <>
-      <div className="add-new-book">
-        <Link to="/dashboard/admin/add-book">
-          <button>+ Add Book</button>
-        </Link>
-      </div>
+      <Link to="/dashboard/admin/add-book">
+        <button className="add-new-book">+ Add Book</button>
+      </Link>
+
       <div className="main">
         <AdminSidebar />
         {isLoading && <h3> Loading Books...</h3>}

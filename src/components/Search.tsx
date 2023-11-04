@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { AppDispatch, RootState } from './redux/store'
@@ -16,14 +16,14 @@ export default function Search() {
     <div className="search-filter-bar">
       <div className="search-input">
         <p>Search:</p>
-        <input type="text" value={search} onChange={handleSearch} />
+        <input type="text" value={search} onChange={handleSearch} placeholder="Search here" />
       </div>
 
       <div className="user-btn">
-        <Link to="/dashboard/user/available-book">
+        <Link to="/available-book">
           <button className="more-dtl-btn">Available Books</button>
         </Link>
-        <Link to="/dashboard/user/books">
+        <Link to="/">
           <button className="borrow-btn">All</button>
         </Link>
       </div>
