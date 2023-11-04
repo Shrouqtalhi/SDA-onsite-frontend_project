@@ -50,7 +50,22 @@ const usersSlice = createSlice({
         foundUser.block = !foundUser.block
       }
     },
-
+    updateProfile: (state, action) => {
+      const { id, firstName, lastName } = action.payload
+      const foundUser = state.users.find((user) => user.id === id)
+      if (foundUser) {
+        foundUser.firstName = firstName
+        foundUser.lastName = lastName
+        state.userData = foundUser
+        localStorage.setItem(
+          'loginData',
+          JSON.stringify({
+            isLoggedIn: state.isLoggedIn,
+            userData: state.userData
+          })
+        )
+      }
+    },
     login: (state, action) => {
       state.isLoggedIn = true
       state.userData = action.payload
@@ -88,6 +103,7 @@ const usersSlice = createSlice({
   }
 })
 
-export const { login, logout, removeUser, blockUser, addUser, updatedUser } = usersSlice.actions
+export const { login, logout, removeUser, blockUser, addUser, updatedUser, updateProfile } =
+  usersSlice.actions
 
 export default usersSlice.reducer

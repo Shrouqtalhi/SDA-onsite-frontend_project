@@ -1,6 +1,6 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { InitialStateBorrows, Users } from '../../type/type'
+import { InitialStateBorrows } from '../../type/type'
 
 export const fetchBorrows = createAsyncThunk('users/fetchBorrows', async () => {
   const res = await axios.get('/library/borrows.json')
@@ -10,9 +10,6 @@ export const fetchBooks = createAsyncThunk('users/fetchBooks', async () => {
   const res = await axios.get('/library/books.json')
   return res.data
 })
-
-// const data =
-//   localStorage.getItem('cart') !== null ? JSON.parse(String(localStorage.getItem('cart'))) : []
 
 const initialState: InitialStateBorrows = {
   borrows: [],

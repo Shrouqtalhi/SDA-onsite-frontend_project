@@ -15,8 +15,6 @@ export default function UserBooks() {
   const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
   const { borrowbooks } = useSelector((state: RootState) => state.borrows)
 
-  console.log(borrowbooks)
-
   useEffect(() => {
     dispatch(fetchBooks())
   }, [])

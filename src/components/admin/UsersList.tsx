@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { TbHttpDelete } from 'react-icons/tb'
-import { PiNotePencilBold, PiUsersThreeDuotone, PiUsersThreeLight } from 'react-icons/pi'
+import { PiNotePencilBold, PiUsersThreeDuotone } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
 import AdminSidebar from './AdminSidebar'
 import { Users } from '../type/type'
@@ -23,7 +23,6 @@ export default function UsersList() {
 
   const handleUserBlock = (id: Users) => {
     dispatch(blockUser(id))
-    console.log(id)
   }
 
   return (
