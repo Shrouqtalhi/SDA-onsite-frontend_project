@@ -1,13 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { GiBookCover } from 'react-icons/gi'
-import { PiNotePencilBold } from 'react-icons/pi'
-import { removeBook } from '../redux/slices/bookSlice'
-import { Link } from 'react-router-dom'
-import AdminSidebar from './AdminSidebar'
-import { TbHttpDelete } from 'react-icons/tb'
-import { Book } from '../type/type'
 import { fetchBorrows } from '../redux/slices/borrowSlice'
 
 export default function BorrowsList() {
@@ -21,8 +14,7 @@ export default function BorrowsList() {
   }, [dispatch])
 
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       {isLoading && <h3> Loading Books...</h3>}
       {error && <h3> {error}</h3>}
       <div className="list-of-users">
@@ -46,6 +38,6 @@ export default function BorrowsList() {
             ))}
         </ul>
       </div>
-    </div>
+    </>
   )
 }

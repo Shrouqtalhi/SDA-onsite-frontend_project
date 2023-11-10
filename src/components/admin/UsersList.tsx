@@ -26,8 +26,7 @@ export default function UsersList() {
   }
 
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       {isLoading && <h3> Loading Users...</h3>}
       {error && <h3> {error}</h3>}
       <div className="list-of-users">
@@ -44,7 +43,7 @@ export default function UsersList() {
                     <span>{user.email}</span>
                     <span>{user.role}</span>
                     <div className="user-btn">
-                      <Link to={`dashboard/admin/edit-user/${user.id}`}>
+                      <Link to={`/admin/edit-user/${user.id}`}>
                         <button className="more-dtl-btn">
                           <PiNotePencilBold />
                         </button>
@@ -75,6 +74,6 @@ export default function UsersList() {
             })}
         </ul>
       </div>
-    </div>
+    </>
   )
 }

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { FaHome, FaUser } from 'react-icons/fa'
+import { FaHandHoldingDollar } from 'react-icons/fa6'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { AppDispatch } from '../redux/store'
@@ -23,26 +25,26 @@ export default function AdminSidebar() {
 
   return (
     <nav className="sidebar">
-      <Link to="/dashboard/admin">
+      <Link to="/admin/books">
         <FaHome
           className={activeButton === 'book' ? 'active' : ''}
           onClick={() => handleClick('book')}
         />
       </Link>
-      <Link to="/dashboard/admin/authors">
+      <Link to="/admin/authors">
         <BsPencilSquare
           className={activeButton === 'author' ? 'active' : ''}
           onClick={() => handleClick('author')}
         />
       </Link>
 
-      <Link to="/dashboard/admin/borrows">
-        <FaUser
+      <Link to="/admin/borrows">
+        <FaHandHoldingDollar
           className={activeButton === 'borrow' ? 'active' : ''}
           onClick={() => handleClick('borrow')}
         />
       </Link>
-      <Link to="/dashboard/admin/users">
+      <Link to="/admin/users">
         <FaUser
           className={activeButton === 'users' ? 'active' : ''}
           onClick={() => handleClick('users')}

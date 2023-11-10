@@ -4,7 +4,6 @@ import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { fetchBooks } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
-import Sidebar from '../Navbar'
 import Search from '../Search'
 
 export default function Home() {
@@ -31,7 +30,6 @@ export default function Home() {
 
   return (
     <>
-      <Sidebar />
       <Search />
       {isLoading && <h3> Loading Books...</h3>}
       {error && <h3> {error}</h3>}

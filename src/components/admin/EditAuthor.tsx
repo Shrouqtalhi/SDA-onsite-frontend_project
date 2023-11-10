@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import AdminSidebar from './AdminSidebar'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
@@ -22,12 +21,11 @@ export default function EditAuthor() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     dispatch(updatedAuthor(update))
-    navigate('/dashboard/admin/authors')
+    navigate('/admin/authors')
   }
 
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       <form className="add-form" onSubmit={handleSubmit}>
         <h2>Edit Author..</h2>
 
@@ -46,6 +44,6 @@ export default function EditAuthor() {
           Edit Author
         </button>
       </form>
-    </div>
+    </>
   )
 }

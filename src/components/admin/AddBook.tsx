@@ -44,11 +44,10 @@ export default function AddBook() {
 
     dispatch(addBook(newBook))
     setAdd(initValue)
-    navigate('/dashboard/admin')
+    navigate('/admin')
   }
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       <form onSubmit={handleSubmit} className="add-form">
         <h2>New Book</h2>
 
@@ -96,6 +95,6 @@ export default function AddBook() {
           Add Book
         </button>
       </form>
-    </div>
+    </>
   )
 }

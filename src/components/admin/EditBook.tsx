@@ -30,12 +30,11 @@ export default function EditBook() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     dispatch(updatedBook(updateBook))
-    navigate('/dashboard/admin')
+    navigate('/admin/books')
   }
 
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       <form onSubmit={handleSubmit} className="add-form">
         <h2>Edit Book..</h2>
 
@@ -84,6 +83,6 @@ export default function EditBook() {
           Edit Book
         </button>
       </form>
-    </div>
+    </>
   )
 }

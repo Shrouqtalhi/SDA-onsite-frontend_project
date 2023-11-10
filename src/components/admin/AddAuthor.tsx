@@ -24,7 +24,7 @@ export default function AddAuthor() {
       name: add.name
     }
     dispatch(addAuthor(newAuthor))
-    navigate('/dashboard/admin/authors')
+    navigate('/admin/authors')
   }
   return (
     <div className="main">

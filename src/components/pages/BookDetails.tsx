@@ -33,7 +33,7 @@ export default function BookById() {
     return (
       <div className="book-content-icon">
         {isLoggedIn ? (
-          <Link to={`/dashboard/${userData?.role}`}>
+          <Link to={`/${userData?.role}/books`}>
             <FaHome className="home-icon" />
           </Link>
         ) : (

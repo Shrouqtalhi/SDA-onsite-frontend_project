@@ -22,14 +22,13 @@ export default function EditUser() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     dispatch(updatedUser(update))
-    navigate('/dashboard/admin/authors')
+    navigate('/admin/users')
   }
 
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       <form className="add-form" onSubmit={handleSubmit}>
-        <h2>Edit Author..</h2>
+        <h2>Edit User..</h2>
 
         <label htmlFor="title" className="form-lable">
           User Name:
@@ -43,9 +42,9 @@ export default function EditUser() {
         />
 
         <button type="submit" className="add-btn">
-          Edit Author
+          Edit User
         </button>
       </form>
-    </div>
+    </>
   )
 }

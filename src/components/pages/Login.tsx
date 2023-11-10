@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../redux/store'
 import { fetchUsers, login } from '../redux/slices/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router'
-import Sidebar from '../Navbar'
+import Navbar from '../Navbar'
 import { Link } from 'react-router-dom'
 
 export default function Login({ pathName }: { pathName: string }) {
@@ -44,7 +44,7 @@ export default function Login({ pathName }: { pathName: string }) {
       }
 
       dispatch(login(foundUser))
-      navigate(pathName ? pathName : `/dashboard/${foundUser.role}`)
+      navigate(pathName ? pathName : `/${foundUser.role}`)
     } catch (error) {
       console.log(error)
     }
@@ -56,7 +56,6 @@ export default function Login({ pathName }: { pathName: string }) {
 
   return (
     <div>
-      <Sidebar />
       <form className="add-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
         <label htmlFor="email" className="form-lable">

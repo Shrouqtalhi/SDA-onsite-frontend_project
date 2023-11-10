@@ -39,7 +39,6 @@ export default function Register() {
   }
   return (
     <div>
-      <Navbar />
       <form onSubmit={handleSubmit} className="add-form">
         <h2>Register</h2>
 

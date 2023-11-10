@@ -27,7 +27,7 @@ a {
   display: grid;
   grid-template-columns: 8rem 1fr;
   border-radius: 25px;
-  padding: 10px;
+  padding: 2px;
   gap: 15px;
   height: 100vh;
 }
@@ -75,10 +75,12 @@ a {
   padding: 20px;
   display: flex;
   justify-content: center;
+  /* align-items: center; */
   gap: 70px;
   color: #383a3f;
   background-color: #1a1d21;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 /* ********** SideBar ************* */
@@ -113,6 +115,7 @@ a {
   color: #fff;
   background-color: #17191e;
   overflow: auto;
+  height: 100vh;
 }
 
 .books img {
@@ -347,10 +350,14 @@ h5 span {
   gap: 20px;
   background-color: #1a1d21;
   font-size: 20px;
+  height: 94vh;
+  border-radius: 10px;
+  height: 100vh;
 }
 .user {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: center;
   padding: 30px;
 }
 

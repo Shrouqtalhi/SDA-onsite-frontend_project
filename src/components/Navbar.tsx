@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { MdEmail } from 'react-icons/md'
 import { TbUserSquare } from 'react-icons/tb'
-import { RxDashboard } from 'react-icons/rx'
 import { BiLogInCircle, BiSolidBookAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from './redux/store'
+import { FaUserTie } from 'react-icons/fa'
 
 export default function Navbar() {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
@@ -17,46 +17,46 @@ export default function Navbar() {
   }
   return (
     <nav className="navbar">
-      <Link to="/contact">
-        <MdEmail
-          className={activeButton === 'contact' ? 'active' : ''}
-          onClick={() => handleClick('contact')}
-        />
+      <Link
+        to="/contact"
+        className={activeButton === 'contact' ? 'active' : ''}
+        onClick={() => handleClick('contact')}>
+        <MdEmail />
         Contact Us
-      </Link>
-      <Link to="/">
-        <BiSolidBookAlt
-          className={activeButton === 'home' ? 'active' : ''}
-          onClick={() => handleClick('home')}
-        />
-        Books
       </Link>
 
       {!isLoggedIn && (
         <>
-          <Link to={`/login`}>
-            <BiLogInCircle
-              className={activeButton === 'login' ? 'active' : ''}
-              onClick={() => handleClick('login')}
-            />
+          <Link
+            to="/"
+            className={activeButton === 'home' ? 'active' : ''}
+            onClick={() => handleClick('home')}>
+            <BiSolidBookAlt />
+            Books
+          </Link>
+          <Link
+            to={`/login`}
+            className={activeButton === 'login' ? 'active' : ''}
+            onClick={() => handleClick('login')}>
+            <BiLogInCircle />
             Login
           </Link>
 
-          <Link to="/register">
-            <TbUserSquare
-              className={activeButton === 'register' ? 'active' : ''}
-              onClick={() => handleClick('register')}
-            />
+          <Link
+            to="/register"
+            className={activeButton === 'register' ? 'active' : ''}
+            onClick={() => handleClick('register')}>
+            <TbUserSquare />
             Register
           </Link>
         </>
       )}
       {isLoggedIn && (
-        <Link to={`/dashboard/${userData?.role}`}>
-          <RxDashboard
-            className={activeButton === 'dashboard' ? 'active' : ''}
-            onClick={() => handleClick('dashboard')}
-          />
+        <Link
+          to={`/${userData?.role}/books`}
+          className={activeButton === 'dashboard' ? 'active' : ''}
+          onClick={() => handleClick('dashboard')}>
+          <FaUserTie />
           {userData?.role}
         </Link>
       )}
