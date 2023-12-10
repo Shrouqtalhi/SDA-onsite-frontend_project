@@ -1,10 +1,13 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { Book, InitialState } from '../../type/type'
+import api from '../../../api'
 
 export const fetchBooks = createAsyncThunk('users/fetchBook', async () => {
-  const res = await axios.get('/library/books.json')
-  return res.data
+  // const res = await axios.get('/library/books.json')
+  const res = await api.get('http://localhost:5002/api/books')
+  console.log(res.data.payload)
+  return res.data.payload
 })
 
 const initialState: InitialState = {
@@ -31,7 +34,7 @@ const bookSlice = createSlice({
     updatedBook: (state, action: PayloadAction<Book>) => {
       const updatedBook = action.payload
       const updated = state.books.map((book) => {
-        if (book.id === updatedBook.id) {
+        if (book._id === updatedBook._id) {
           return updatedBook
         }
         return book
@@ -40,12 +43,12 @@ const bookSlice = createSlice({
       return state
     },
     removeBook: (state, action: PayloadAction<Book>) => {
-      const removeBook = state.books.filter((book) => book.id !== action.payload.id)
+      const removeBook = state.books.filter((book) => book._id !== action.payload._id)
       state.books = removeBook
     },
-    findBookById: (state, action: PayloadAction<number>) => {
+    findBookById: (state, action: PayloadAction<string>) => {
       const bookId = action.payload
-      const foundBook = state.books.find((book) => book.id === bookId)
+      const foundBook = state.books.find((book) => book._id === bookId)
 
       if (foundBook) {
         state.foundBook = foundBook

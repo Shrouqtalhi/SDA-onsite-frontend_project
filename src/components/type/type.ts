@@ -3,13 +3,14 @@ import { fetchAuthors } from '../redux/slices/authorsSlice'
 import { RootState } from '../redux/store'
 
 export type Book = {
-  id: number
+  _id: string
   image: string
   title: string
   description: string
   authorId: number
   isAvailable: boolean
   bookCopiesQty: number
+  price: number //* new
 }
 
 export type InitialState = {

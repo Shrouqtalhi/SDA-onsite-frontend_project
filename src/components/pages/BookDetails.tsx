@@ -17,8 +17,10 @@ export default function BookById() {
 
   useEffect(() => {
     dispatch(fetchBooks()).then(() => {
-      dispatch(findBookById(Number(id)))
-      dispatch(fetchAuthors())
+      if (id) {
+        dispatch(findBookById(id))
+        dispatch(fetchAuthors())
+      }
     })
   }, [dispatch, id])
 
