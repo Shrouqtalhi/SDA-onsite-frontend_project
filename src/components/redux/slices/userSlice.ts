@@ -1,10 +1,50 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { InitialStateUsers, Users } from '../../type/type'
+import api from '../../../api'
+import { AxiosError } from 'axios'
+
+type Credentials = {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+}
+
 export const fetchUsers = createAsyncThunk('users/fetchusers', async () => {
-  const res = await axios.get('/library/users.json')
+  const res = await api.get('/api/users')
   return res.data
 })
+export const fetchUsersRegister = createAsyncThunk(
+  'users/register',
+  async (credentials: Credentials, { rejectWithValue }) => {
+    try {
+      const res = await api.post('/api/users/register', credentials)
+      console.log(res.data)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.msg)
+      }
+    }
+  }
+)
+
+export const fetchUsersLogin = createAsyncThunk(
+  'users/login',
+  async (credentials: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const res = await api.post('/api/users/login', credentials)
+      console.log(res.data)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.msg)
+      }
+    }
+  }
+)
 
 const data =
   localStorage.getItem('loginData') !== null
@@ -32,7 +72,7 @@ const usersSlice = createSlice({
     updatedUser: (state, action: PayloadAction<Users>) => {
       const updatedUser = action.payload
       const updated = state.users.map((user) => {
-        if (user.id === updatedUser.id) {
+        if (user._id === updatedUser._id) {
           return updatedUser
         }
         return user
@@ -41,18 +81,18 @@ const usersSlice = createSlice({
       return state
     },
     removeUser: (state, action: PayloadAction<Users>) => {
-      const removeBook = state.users.filter((user) => user.id !== action.payload.id)
+      const removeBook = state.users.filter((user) => user._id !== action.payload._id)
       state.users = removeBook
     },
     blockUser: (state, action: PayloadAction<Users>) => {
-      const foundUser = state.users.find((user) => user.id === action.payload.id)
+      const foundUser = state.users.find((user) => user._id === action.payload._id)
       if (foundUser) {
         foundUser.block = !foundUser.block
       }
     },
     updateProfile: (state, action) => {
       const { id, firstName, lastName } = action.payload
-      const foundUser = state.users.find((user) => user.id === id)
+      const foundUser = state.users.find((user) => user._id === id)
       if (foundUser) {
         foundUser.firstName = firstName
         foundUser.lastName = lastName
@@ -91,14 +131,29 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
-        ;(state.isLoading = true), (state.error = null)
+      .addCase(fetchUsersRegister.pending, (state) => {
+        state.isLoading = true
+        state.error = null
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        ;(state.isLoading = false), (state.users = action.payload)
+      .addCase(fetchUsersRegister.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.users = action.payload
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        ;(state.isLoading = false), (state.error = action.error.message || 'An error occured')
+      .addCase(fetchUsersRegister.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message || 'An error occured'
+      })
+      .addCase(fetchUsersLogin.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(fetchUsersLogin.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.users = action.payload
+      })
+      .addCase(fetchUsersLogin.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message || 'An error occured'
       })
   }
 })

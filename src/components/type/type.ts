@@ -35,7 +35,7 @@ export type InitialStateAuthors = {
 }
 
 export type Users = {
-  id: number
+  _id: number
   firstName: string
   lastName: string
   email: string
@@ -45,7 +45,7 @@ export type Users = {
 }
 
 export type Borrows = {
-  id: number
+  _id: number
   borrowerId: number
   bookId: number
   borrowDate: string

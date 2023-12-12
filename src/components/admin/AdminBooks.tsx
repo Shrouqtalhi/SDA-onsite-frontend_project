@@ -27,7 +27,7 @@ export default function AdminBooks() {
       {isLoading && <h3> Loading Books...</h3>}
       {error && <h3> {error}</h3>}
 
-      <div className="text-btn">
+      <div className="books-dtl">
         <h2>
           <PiBooksFill />
           Books..
@@ -38,16 +38,16 @@ export default function AdminBooks() {
         <ul className="books">
           {books.length > 0 &&
             books.map((book) => (
-              <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
+              <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
                 <img src={book.image} alt={book.title} />
                 <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
                 <div className="user-btn">
-                  <Link to={`/book/${book.id}`}>
+                  <Link to={`/book/${book._id}`}>
                     <button className="more-dtl-btn">
                       <GiBookCover />
                     </button>
                   </Link>
-                  <Link to={`/admin/edit/${book.id}`}>
+                  <Link to={`/admin/edit/${book._id}`}>
                     <button className="borrow-btn">
                       <PiNotePencilBold />
                     </button>
@@ -57,7 +57,7 @@ export default function AdminBooks() {
                     onClick={() => {
                       handleBookDelete(book)
                     }}>
-                    <label htmlFor="my-bton" title="delete">
+                    <label htmlFor="my-btn" title="delete">
                       <TbHttpDelete />
                     </label>
                   </button>

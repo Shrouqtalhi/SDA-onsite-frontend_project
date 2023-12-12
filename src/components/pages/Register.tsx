@@ -1,16 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { addUser, fetchUsers } from '../redux/slices/userSlice'
-import { AppDispatch, RootState } from '../redux/store'
+import { addUser, fetchUsersRegister } from '../redux/slices/userSlice'
+import { AppDispatch } from '../redux/store'
 import { Link } from 'react-router-dom'
-import Navbar from '../Navbar'
+import { AxiosError } from 'axios'
 
 export default function Register() {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
-
-  const { users } = useSelector((state: RootState) => state.users)
 
   const initState = {
     firstName: '',
@@ -20,22 +18,30 @@ export default function Register() {
     role: 'user',
     block: false
   }
-  const [user, setUser] = useState(initState)
-
+  const [credentials, setCredentials] = useState(initState)
+  const [error, setError] = useState<null | string>(null)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser((users) => {
-      return { ...users, [e.target.name]: [e.target.value] }
+    setCredentials((users) => {
+      return { ...users, [e.target.name]: e.target.value }
     })
   }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    const newUser = { id: new Date().getTime(), ...user }
+    // const newUser = { id: new Date().getTime(), ...user }
+    try {
+      const newUser = { ...credentials }
 
-    dispatch(fetchUsers()).then(() => dispatch(addUser(newUser)))
-
-    setUser(initState)
-    navigate('/login')
+      dispatch(fetchUsersRegister(credentials)).then(() => dispatch(addUser(newUser)))
+      setCredentials(initState)
+    } catch (error) {
+      console.log(error)
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.msg)
+      }
+      setError('somthing went wrong')
+    }
+    // navigate('/login')
   }
   return (
     <div>
@@ -50,7 +56,7 @@ export default function Register() {
           name="firstName"
           id="firstName"
           placeholder="FirstName"
-          value={user.firstName}
+          value={credentials.firstName}
           onChange={handleChange}
         />
 
@@ -62,7 +68,7 @@ export default function Register() {
           name="lastName"
           id="lastName"
           placeholder="lastName"
-          value={user.lastName}
+          value={credentials.lastName}
           onChange={handleChange}
         />
 
@@ -74,7 +80,7 @@ export default function Register() {
           name="email"
           id="email"
           placeholder="Email"
-          value={user.email}
+          value={credentials.email}
           onChange={handleChange}
         />
 
@@ -82,11 +88,11 @@ export default function Register() {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           placeholder="Password"
-          value={user.password}
+          value={credentials.password}
           onChange={handleChange}
         />
 

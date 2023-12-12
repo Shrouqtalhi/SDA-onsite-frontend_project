@@ -1,12 +1,15 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { Book, InitialState } from '../../type/type'
 import api from '../../../api'
 
-export const fetchBooks = createAsyncThunk('users/fetchBook', async () => {
+export const fetchBooks = createAsyncThunk('books/fetchBook', async () => {
   // const res = await axios.get('/library/books.json')
-  const res = await api.get('http://localhost:5002/api/books')
-  console.log(res.data.payload)
+  const res = await api.get('/api/books')
+  return res.data.payload
+})
+
+export const fetchBookById = createAsyncThunk('bookId/fetchBook', async (id: string) => {
+  const res = await api.get(`/api/books/${id}`)
   return res.data.payload
 })
 
@@ -63,13 +66,28 @@ const bookSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooks.pending, (state) => {
-        ;(state.isLoading = true), (state.error = null)
+        state.isLoading = true
+        state.error = null
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
-        ;(state.isLoading = false), (state.books = action.payload)
+        state.isLoading = false
+        state.books = action.payload
       })
       .addCase(fetchBooks.rejected, (state, action) => {
-        ;(state.isLoading = false), (state.error = action.error.message || 'An error occured')
+        state.isLoading = false
+        state.error = action.error.message || 'An error occured'
+      })
+      .addCase(fetchBookById.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(fetchBookById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.foundBook = action.payload
+      })
+      .addCase(fetchBookById.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message || 'An error occured'
       })
   }
 })

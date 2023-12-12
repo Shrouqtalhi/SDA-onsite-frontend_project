@@ -15,51 +15,53 @@ export default function Navbar() {
   const handleClick = (icon: string) => {
     setActiveButton(icon)
   }
-  return (
-    <nav className="navbar">
-      <Link
-        to="/contact"
-        className={activeButton === 'contact' ? 'active' : ''}
-        onClick={() => handleClick('contact')}>
-        <MdEmail />
-        Contact Us
-      </Link>
+  if (!isLoggedIn || (isLoggedIn && userData?.role !== 'admin')) {
+    return (
+      <nav className="navbar">
+        {!isLoggedIn && (
+          <>
+            <Link
+              to="/contact"
+              className={activeButton === 'contact' ? 'active' : ''}
+              onClick={() => handleClick('contact')}>
+              <MdEmail />
+              Contact Us
+            </Link>
+            <Link
+              to="/"
+              className={activeButton === 'home' ? 'active' : ''}
+              onClick={() => handleClick('home')}>
+              <BiSolidBookAlt />
+              Books
+            </Link>
+            <Link
+              to={`/login`}
+              className={activeButton === 'login' ? 'active' : ''}
+              onClick={() => handleClick('login')}>
+              <BiLogInCircle />
+              Login
+            </Link>
 
-      {!isLoggedIn && (
-        <>
+            <Link
+              to="/register"
+              className={activeButton === 'register' ? 'active' : ''}
+              onClick={() => handleClick('register')}>
+              <TbUserSquare />
+              Register
+            </Link>
+          </>
+        )}
+        {isLoggedIn && (
           <Link
-            to="/"
-            className={activeButton === 'home' ? 'active' : ''}
-            onClick={() => handleClick('home')}>
-            <BiSolidBookAlt />
-            Books
+            to={`/${userData?.role}/books`}
+            className={activeButton === 'dashboard' ? 'active' : ''}
+            onClick={() => handleClick('dashboard')}>
+            <FaUserTie />
+            {userData?.role}
           </Link>
-          <Link
-            to={`/login`}
-            className={activeButton === 'login' ? 'active' : ''}
-            onClick={() => handleClick('login')}>
-            <BiLogInCircle />
-            Login
-          </Link>
-
-          <Link
-            to="/register"
-            className={activeButton === 'register' ? 'active' : ''}
-            onClick={() => handleClick('register')}>
-            <TbUserSquare />
-            Register
-          </Link>
-        </>
-      )}
-      {isLoggedIn && (
-        <Link
-          to={`/${userData?.role}/books`}
-          className={activeButton === 'dashboard' ? 'active' : ''}
-          onClick={() => handleClick('dashboard')}>
-          <FaUserTie />
-          {userData?.role}
-        </Link>
-      )}
-    </nav>
-  )
+        )}
+      </nav>
+    )
+  }
+  return null
 }

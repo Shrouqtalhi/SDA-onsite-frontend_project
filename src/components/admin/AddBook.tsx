@@ -1,18 +1,18 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { addBook } from '../redux/slices/bookSlice'
-import AdminSidebar from './AdminSidebar'
 import { Book } from '../type/type'
 import { AppDispatch } from '../redux/store'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 const initValue: Book = {
-  id: 0,
+  _id: '',
   image: '',
   title: '',
   description: '',
   authorId: 0,
   isAvailable: true,
-  bookCopiesQty: 0
+  bookCopiesQty: 0,
+  price: 0
 }
 
 export default function AddBook() {
@@ -33,13 +33,14 @@ export default function AddBook() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const newBook = {
-      id: new Date().getTime(),
-      authorId: 0,
+      _id: add._id,
       title: add.title,
       description: add.description,
       bookCopiesQty: add.bookCopiesQty,
+      authorId: add.authorId,
       isAvailable: true,
-      image: add.image
+      image: add.image,
+      price: add.price
     }
 
     dispatch(addBook(newBook))
@@ -82,6 +83,16 @@ export default function AddBook() {
           name="bookCopiesQty"
           placeholder="bookCopiesQty"
           value={add.bookCopiesQty}
+          onChange={handleChangeNumber}
+        />
+        <label htmlFor="price" className="form-lable">
+          Price:
+        </label>
+        <input
+          type="number"
+          name="price"
+          placeholder="price"
+          value={add.price}
           onChange={handleChangeNumber}
         />
 

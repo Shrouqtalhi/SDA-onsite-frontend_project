@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { fetchBooks, findBookById } from '../redux/slices/bookSlice'
+import { Link, useParams } from 'react-router-dom'
+import { fetchBookById } from '../redux/slices/bookSlice'
 import { useEffect } from 'react'
 import { AiOutlineStar } from 'react-icons/ai'
 import { fetchAuthors } from '../redux/slices/authorsSlice'
@@ -16,12 +16,10 @@ export default function BookById() {
   const { authors } = useSelector((state: RootState) => state.authors)
 
   useEffect(() => {
-    dispatch(fetchBooks()).then(() => {
-      if (id) {
-        dispatch(findBookById(id))
-        dispatch(fetchAuthors())
-      }
-    })
+    if (id) {
+      dispatch(fetchBookById(id))
+      dispatch(fetchAuthors())
+    }
   }, [dispatch, id])
 
   if (error) {

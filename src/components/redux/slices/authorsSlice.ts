@@ -1,9 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { Author, InitialStateAuthors } from '../../type/type'
+import api from '../../../api'
 
 export const fetchAuthors = createAsyncThunk('authers/fetchAuthors', async () => {
-  const res = await axios.get('/library/authors.json')
+  const res = await api.get('/library/authors.json')
   return res.data
 })
 

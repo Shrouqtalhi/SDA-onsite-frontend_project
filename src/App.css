@@ -104,6 +104,14 @@ a {
 
 /* ********* Books *************** */
 
+.books-dtl {
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1d21;
+  padding: 30px;
+  height: 100vh;
+}
+
 .books {
   border-radius: 10px;
   padding: 40px;
@@ -113,7 +121,7 @@ a {
   gap: 2.5rem;
   list-style: none;
   color: #fff;
-  background-color: #17191e;
+  background-color: #1a1d21;
   overflow: auto;
   height: 100vh;
 }
@@ -124,8 +132,8 @@ a {
 }
 
 .add-new-book {
-  width: 150px;
-  font-size: 25px;
+  width: 110px;
+  font-size: 18px;
   font-family: inherit;
   background-image: linear-gradient(160deg, #1b1e24, #343943, #c0a689, #e0c2a0);
   margin: 13px;
@@ -191,6 +199,7 @@ a {
 
 h2 {
   color: #c0a689;
+  font-size: 30px;
 }
 .book-content-icon {
   font-size: 30px;
@@ -293,7 +302,7 @@ h5 span {
   font-size: 20px;
   color: #383a3f;
   border-radius: 10px;
-  height: 80vh;
+  height: 100vh;
 }
 
 .add-form input {
