@@ -1,6 +1,7 @@
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { fetchAuthors } from '../redux/slices/authorsSlice'
 import { RootState } from '../redux/store'
+import { ROLES } from '../../constants'
 
 export type Book = {
   _id: string
@@ -34,13 +35,15 @@ export type InitialStateAuthors = {
   search: string
 }
 
+type Role = keyof typeof ROLES
+
 export type Users = {
   _id: number
   firstName: string
   lastName: string
   email: string
   password: string
-  role: string
+  role: Role
   block: boolean
 }
 

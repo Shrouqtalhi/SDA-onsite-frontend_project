@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { addUser, fetchUsersRegister } from '../redux/slices/userSlice'
-import { AppDispatch } from '../redux/store'
+import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
@@ -18,6 +18,8 @@ export default function Register() {
     role: 'user',
     block: false
   }
+  const userState = useSelector((state: RootState) => state.users)
+  console.log(userState)
   const [credentials, setCredentials] = useState(initState)
   const [error, setError] = useState<null | string>(null)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,18 +31,19 @@ export default function Register() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     // const newUser = { id: new Date().getTime(), ...user }
-    try {
-      const newUser = { ...credentials }
-
-      dispatch(fetchUsersRegister(credentials)).then(() => dispatch(addUser(newUser)))
-      setCredentials(initState)
-    } catch (error) {
-      console.log(error)
-      if (error instanceof AxiosError) {
-        setError(error.response?.data.msg)
-      }
-      setError('somthing went wrong')
+    if (
+      !credentials.email ||
+      !credentials.password ||
+      !credentials.firstName ||
+      !credentials.lastName
+    ) {
+      setError('Please fill out all required fields (email, password, first name, last name)')
+      return
     }
+
+    dispatch(fetchUsersRegister(credentials))
+    setCredentials(initState)
+
     // navigate('/login')
   }
   return (
@@ -105,6 +108,7 @@ export default function Register() {
             Login
           </Link>
         </span>
+        {userState.error && <p style={{ color: 'red' }}>{userState.error}</p>}
       </form>
     </div>
   )

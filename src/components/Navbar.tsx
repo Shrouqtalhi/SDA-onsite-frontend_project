@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from './redux/store'
 import { FaUserTie } from 'react-icons/fa'
+import { ROLES } from '../constants'
 
 export default function Navbar() {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
@@ -15,7 +16,7 @@ export default function Navbar() {
   const handleClick = (icon: string) => {
     setActiveButton(icon)
   }
-  if (!isLoggedIn || (isLoggedIn && userData?.role !== 'admin')) {
+  if (!isLoggedIn || (isLoggedIn && userData?.role !== ROLES.ADMIN)) {
     return (
       <nav className="navbar">
         {!isLoggedIn && (

@@ -23,9 +23,9 @@ export default function Index() {
         <Route path="/" element={<Home />} />
         <Route path="/book/:id" element={<BookDetails />} />
 
-        <Route path="/admin" element={<AdminRoute />}>
-          <Route path="/admin/*" element={<AdminLayout />} />
-        </Route>
+        {/* <Route path="/admin" element={<AdminRoute />}> */}
+        <Route path="/admin/*" element={<AdminLayout />} />
+        {/* </Route> */}
 
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserBooks />} />
@@ -39,7 +39,7 @@ export default function Index() {
 
         <Route path="/available-book" element={<FilterByStatus />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/login" element={<Login pathName={`/`} />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />
       </Routes>

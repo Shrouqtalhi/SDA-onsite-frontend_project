@@ -422,3 +422,69 @@ h5 span {
 .borrow-date span {
   color: #fff;
 }
+
+/* ******** Media ************ */
+
+@media only screen and (max-width: 1237px) {
+  .header h3::before,
+  .header h3::after {
+    height: 3px;
+    width: 10rem;
+  }
+}
+
+@media only screen and (max-width: 1089px) {
+  .header h3::before,
+  .header h3::after {
+    height: 3px;
+    width: 7rem;
+  }
+}
+
+@media only screen and (max-width: 988px) {
+  .header h3::before,
+  .header h3::after {
+    height: 0px;
+    width: 0rem;
+  }
+}
+
+/* 
+
+
+.header {
+  align-self: stretch;
+  margin-bottom: 50px;
+}
+
+.header h3 {
+  color: #d3ad7f;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 5.2rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.header h3::before,
+.header h3::after {
+  display: block;
+  content: '';
+  height: 3px;
+  width: 15rem;
+  background-color: #c0a689;
+  position: absolute;
+  top: calc(50% - 1px);
+}
+
+.header h3::before {
+  left: 0;
+}
+
+.header h3::after {
+  right: 0;
+}
+*/

@@ -24,14 +24,14 @@ const borrowSlice = createSlice({
   reducers: {
     addToBorrow: (state, action) => {
       const book = action.payload
-      const isUniuqe = state.borrowbooks.find((borrow) => borrow.id === book.id)
+      const isUniuqe = state.borrowbooks.find((borrow) => borrow._id === book.id)
       if (isUniuqe) {
         return state
       }
       state.borrowbooks.push(book)
     },
     removeFromBorrow: (state, action) => {
-      const removeBook = state.borrowbooks.filter((book) => book.id !== action.payload.id)
+      const removeBook = state.borrowbooks.filter((book) => book._id !== action.payload.id)
       state.borrowbooks = removeBook
     }
   },

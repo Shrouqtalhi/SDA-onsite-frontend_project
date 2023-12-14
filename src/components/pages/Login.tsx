@@ -1,22 +1,23 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store'
 import { fetchUsersLogin } from '../redux/slices/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { AxiosError } from 'axios'
+import { ROLES } from '../../constants'
 
-export default function Login({ pathName }: { pathName: string }) {
+export default function Login() {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
-  const [error, setError] = useState<null | string>(null)
-  const [success, setSuccess] = useState<null | string>(null)
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
   })
+
+  const usersState = useSelector((state: RootState) => state.users)
   const handeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((state) => {
       return { ...state, [e.target.name]: e.target.value }
@@ -25,41 +26,19 @@ export default function Login({ pathName }: { pathName: string }) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    try {
-      // const foundUser = users.find((userData) => userData.email === user.email)
-      // if (!foundUser) {
-      //   // console.log('Wrong Email or Password')
-      //   return
-      // }
 
-      dispatch(fetchUsersLogin(credentials))
+    dispatch(fetchUsersLogin(credentials)).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        const user = res.payload.user
+        localStorage.setItem('token', res.payload.token)
+        localStorage.setItem('user', JSON.stringify(user))
 
-      // if (foundUser.password !== user.password) {
-      //   console.log('Wrong Email or Password')
-      //   return
-      // }
-      // if (foundUser.block) {
-      //   console.log('Sorry You are Banned Please Contact Us')
-      //   return
-      // }
-
-      // dispatch(login(foundUser))
-      // if (foundUser.role === 'admin') {
-      //   navigate(`/admin/books`)
-      // } else {
-      //   navigate(pathName ? pathName : `/${foundUser.role}`)
-      // }
-      setError(null)
-    } catch (error) {
-      console.log(error)
-      if (error instanceof AxiosError) {
-        setError(error.response?.data.msg)
-        setSuccess(null)
+        if (user.role === ROLES.ADMIN) {
+          navigate(`/admin/books`)
+        } else if (user.role === ROLES.USER) {
+          navigate('/')
+        }
       }
-    }
-    setCredentials({
-      email: '',
-      password: ''
     })
   }
 
@@ -98,6 +77,7 @@ export default function Login({ pathName }: { pathName: string }) {
             register now
           </Link>
         </span>
+        {usersState.error && <p style={{ color: 'red' }}>{usersState.error}</p>}
       </form>
     </div>
   )

@@ -4,10 +4,10 @@ import { AppDispatch, RootState } from '../redux/store'
 import { TbHttpDelete } from 'react-icons/tb'
 import { PiNotePencilBold, PiUsersThreeDuotone } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
-import AdminSidebar from './AdminSidebar'
 import { Users } from '../type/type'
 import { blockUser, fetchUsers, removeUser } from '../redux/slices/userSlice'
 import { ImBlocked } from 'react-icons/im'
+import { ROLES } from '../../constants'
 
 export default function UsersList() {
   const dispatch: AppDispatch = useDispatch()
@@ -36,14 +36,15 @@ export default function UsersList() {
         <ul className="user">
           {users.length > 0 &&
             users.map((user) => {
-              if (user.role !== 'admin') {
+              if (user.role !== ROLES.ADMIN) {
                 return (
-                  <li key={user.id}>
+                  <li key={user._id}>
                     <h5>{`${user.firstName} ${user.lastName}`}</h5>
                     <span>{user.email}</span>
+                    {'     '}
                     <span>{user.role}</span>
                     <div className="user-btn">
-                      <Link to={`/admin/edit-user/${user.id}`}>
+                      <Link to={`/admin/edit-user/${user._id}`}>
                         <button className="more-dtl-btn">
                           <PiNotePencilBold />
                         </button>

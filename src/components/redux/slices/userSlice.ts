@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { InitialStateUsers, Users } from '../../type/type'
 import api from '../../../api'
 import { AxiosError } from 'axios'
+import { getToken, getUserFromLocalStorage } from '../../../utils/token'
 
 type Credentials = {
   firstName: string
@@ -12,17 +13,18 @@ type Credentials = {
 
 export const fetchUsers = createAsyncThunk('users/fetchusers', async () => {
   const res = await api.get('/api/users')
-  return res.data
+  console.log(res.data.users)
+  return res.data.users
 })
+
 export const fetchUsersRegister = createAsyncThunk(
   'users/register',
   async (credentials: Credentials, { rejectWithValue }) => {
     try {
       const res = await api.post('/api/users/register', credentials)
-      console.log(res.data)
       return res.data
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.msg)
       }
@@ -35,28 +37,25 @@ export const fetchUsersLogin = createAsyncThunk(
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const res = await api.post('/api/users/login', credentials)
-      console.log(res.data)
       return res.data
     } catch (error) {
-      console.log(error)
       if (error instanceof AxiosError) {
+        console.log(error)
         return rejectWithValue(error.response?.data.msg)
       }
     }
   }
 )
 
-const data =
-  localStorage.getItem('loginData') !== null
-    ? JSON.parse(String(localStorage.getItem('loginData')))
-    : []
+const isLoggedIn = getToken() ? true : false
+const storedUser = getUserFromLocalStorage() ? JSON.parse(getUserFromLocalStorage() || '') : null
 
 const initialState: InitialStateUsers = {
   users: [],
   isLoading: false,
   error: null,
-  isLoggedIn: data.isLoggedIn,
-  userData: data.userData,
+  isLoggedIn: isLoggedIn,
+  userData: storedUser,
   block: false,
   foundUser: {} as Users,
   borrowedBooks: []
@@ -135,26 +134,42 @@ const usersSlice = createSlice({
         state.isLoading = true
         state.error = null
       })
-      .addCase(fetchUsersRegister.fulfilled, (state, action) => {
+      .addCase(fetchUsersRegister.fulfilled, (state) => {
         state.isLoading = false
-        state.users = action.payload
       })
       .addCase(fetchUsersRegister.rejected, (state, action) => {
+        console.log(action)
         state.isLoading = false
-        state.error = action.error.message || 'An error occured'
+        state.error = (action.payload as string) || 'An error occured'
       })
-      .addCase(fetchUsersLogin.pending, (state) => {
-        state.isLoading = true
-        state.error = null
-      })
+      // .addCase(fetchUsersLogin.pending, (state) => {
+      //   state.isLoading = true
+      //   state.error = null
+      // })
       .addCase(fetchUsersLogin.fulfilled, (state, action) => {
         state.isLoading = false
-        state.users = action.payload
+        state.foundUser = action.payload.user
+        state.isLoggedIn = isLoggedIn
+        state.userData = storedUser
       })
       .addCase(fetchUsersLogin.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || 'An error occured'
+        // if(typeof(action.payload )=== )
+        state.error = (action.payload as string) || 'An error occured'
+        console.log('user slice error ', action.payload)
       })
+      // .addCase(fetchUsers.pending, (state) => {
+      //   state.isLoading = true
+      //   state.error = null
+      // })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.users = action.payload
+      })
+    // .addCase(fetchUsers.rejected, (state, action) => {
+    //   state.isLoading = false
+    //   state.error = action.error.message || 'An error occured'
+    // })
   }
 })
 
