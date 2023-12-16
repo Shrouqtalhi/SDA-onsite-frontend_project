@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { fetchUsersLogin } from '../redux/slices/userSlice'
+import { usersLogin } from '../redux/slices/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { ROLES } from '../../constants'
@@ -27,7 +26,7 @@ export default function Login() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    dispatch(fetchUsersLogin(credentials)).then((res) => {
+    dispatch(usersLogin(credentials)).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         const user = res.payload.user
         localStorage.setItem('token', res.payload.token)

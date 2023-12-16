@@ -23,7 +23,7 @@ export type InitialState = {
 }
 
 export type Author = {
-  id: number
+  _id: string
   name: string
 }
 
@@ -38,7 +38,7 @@ export type InitialStateAuthors = {
 type Role = keyof typeof ROLES
 
 export type Users = {
-  _id: number
+  _id: string
   firstName: string
   lastName: string
   email: string
@@ -59,6 +59,7 @@ export type Borrows = {
 export type InitialStateUsers = {
   users: Users[]
   isLoading: boolean
+  success: string | null
   error: string | null
   isLoggedIn: boolean
   userData: Users | null

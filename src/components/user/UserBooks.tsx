@@ -5,7 +5,6 @@ import { GiBookCover } from 'react-icons/gi'
 import { BsEyeglasses } from 'react-icons/bs'
 import { fetchBooks } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
-import UserSidebar from './UserSidebar'
 import Search from '../Search'
 import Navbar from '../Navbar'
 import { addToBorrow } from '../redux/slices/borrowSlice'
@@ -13,7 +12,7 @@ import { addToBorrow } from '../redux/slices/borrowSlice'
 export default function UserBooks() {
   const dispatch = useDispatch<AppDispatch>()
   const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
-  const { borrowbooks } = useSelector((state: RootState) => state.borrows)
+  // const { borrowbooks } = useSelector((state: RootState) => state.borrows)
 
   useEffect(() => {
     dispatch(fetchBooks())
@@ -28,20 +27,18 @@ export default function UserBooks() {
 
   return (
     <>
-      <Navbar />
-      <Search />
-      <div className="main">
-        <UserSidebar />
+      <div className="books-dtl">
+        <Search />
         {isLoading && <h3> Loading products...</h3>}
         {error && <h3> {error}</h3>}
         <ul className="books">
           {filteredBooks.length > 0 &&
             filteredBooks.map((book) => (
-              <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
+              <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
                 <img src={book.image} alt={book.title} />
                 <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
                 <div className="user-btn">
-                  <Link to={`/book/${book.id}`}>
+                  <Link to={`/book/${book._id}`}>
                     <button className="more-dtl-btn">
                       <GiBookCover />
                     </button>

@@ -3,10 +3,9 @@ import { Author } from '../type/type'
 import { useDispatch } from 'react-redux'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { addAuthor } from '../redux/slices/authorsSlice'
-import AdminSidebar from './AdminSidebar'
 
 const initValue: Author = {
-  id: 0,
+  _id: '',
   name: ''
 }
 export default function AddAuthor() {
@@ -20,15 +19,14 @@ export default function AddAuthor() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const newAuthor = {
-      id: new Date().getTime(),
+      _id: add._id,
       name: add.name
     }
     dispatch(addAuthor(newAuthor))
     navigate('/admin/authors')
   }
   return (
-    <div className="main">
-      <AdminSidebar />
+    <>
       <form onSubmit={handleSubmit} className="add-form">
         <h2>New Author</h2>
         <label htmlFor="title" className="form-lable">
@@ -45,6 +43,6 @@ export default function AddAuthor() {
           Add Author
         </button>
       </form>
-    </div>
+    </>
   )
 }

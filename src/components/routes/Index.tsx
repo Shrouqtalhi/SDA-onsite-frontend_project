@@ -14,6 +14,7 @@ import BorrowDetails from '../user/BorrowDetails'
 import ContactUs from '../pages/ContactUs'
 import Navbar from '../Navbar'
 import AdminLayout from './AdminLayout'
+import UserLayout from './UserLayout'
 
 export default function Index() {
   return (
@@ -27,15 +28,9 @@ export default function Index() {
         <Route path="/admin/*" element={<AdminLayout />} />
         {/* </Route> */}
 
-        <Route path="/dashboard" element={<UserRoute />}>
-          <Route path="user" element={<UserBooks />} />
-          <Route path="user/profile" element={<UserProfile />} />
-          {/* <Route path="user/borrows" element={<Borrow />} /> */}
-          <Route path="user/borrow-details" element={<BorrowDetails />} />
-
-          <Route path="user/borrowbook/:id" element={<UserBorrows />} />
-          <Route path="user/books" element={<UserBooks />} />
-        </Route>
+        {/* <Route path="/dashboard" element={<UserRoute />}> */}
+        <Route path="/user/*" element={<UserLayout />} />
+        {/* </Route> */}
 
         <Route path="/available-book" element={<FilterByStatus />} />
         <Route path="/contact" element={<ContactUs />} />

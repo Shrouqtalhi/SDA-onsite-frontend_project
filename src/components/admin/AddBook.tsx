@@ -45,7 +45,7 @@ export default function AddBook() {
 
     dispatch(addBook(newBook))
     setAdd(initValue)
-    navigate('/admin')
+    // navigate('/admin/books')
   }
   return (
     <>
@@ -56,6 +56,7 @@ export default function AddBook() {
           Book Title:
         </label>
         <input
+          id="title"
           type="text"
           name="title"
           placeholder="Title"
@@ -63,10 +64,11 @@ export default function AddBook() {
           onChange={handleChange}
         />
 
-        <label htmlFor="discription" className="form-lable">
-          Book Discription:
+        <label htmlFor="description" className="form-lable">
+          Book Description:
         </label>
         <input
+          id="description"
           type="text"
           name="description"
           placeholder="Book Description"
@@ -74,11 +76,12 @@ export default function AddBook() {
           onChange={handleChange}
         />
 
-        <label htmlFor="discription" className="form-lable">
+        <label htmlFor="bookCopiesQty" className="form-lable">
           Book Copies:
         </label>
 
         <input
+          id="bookCopiesQty"
           type="number"
           name="bookCopiesQty"
           placeholder="bookCopiesQty"
@@ -89,6 +92,7 @@ export default function AddBook() {
           Price:
         </label>
         <input
+          id="price"
           type="number"
           name="price"
           placeholder="price"
@@ -100,7 +104,7 @@ export default function AddBook() {
           Image URL:
         </label>
         <div>
-          <input type="text" name="image" id="image" value={add.image} onChange={handleChange} />
+          <input id="image" type="text" name="image" value={add.image} onChange={handleChange} />
         </div>
         <button type="submit" className="add-btn">
           Add Book

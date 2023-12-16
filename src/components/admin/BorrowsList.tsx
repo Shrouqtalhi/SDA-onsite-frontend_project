@@ -22,7 +22,7 @@ export default function BorrowsList() {
         <ul className="user">
           {borrows.length > 0 &&
             borrows.map((borrow) => (
-              <li key={borrow.id}>
+              <li key={borrow._id}>
                 <h2>Borrower ID : {borrow.borrowerId}</h2>
                 <span>Book ID : {borrow.bookId}</span>
                 <div className="borrow-date">

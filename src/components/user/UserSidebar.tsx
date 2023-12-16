@@ -23,20 +23,20 @@ export default function UserSidebar() {
   }
   return (
     <nav className="sidebar">
-      <Link to="/dashboard/user/profile">
+      <Link to="/user/profile">
         <AiOutlineProfile
           className={activeButton === 'profile' ? 'active' : ''}
           onClick={() => handleClick('profile')}
         />
       </Link>
-      <Link to="/dashboard/user/books">
+      <Link to="/user/books">
         <FaHome
           className={activeButton === 'books' ? 'active' : ''}
           onClick={() => handleClick('books')}
         />
       </Link>
 
-      <Link to="/dashboard/user/borrow-details">
+      <Link to="/user/borrow-details">
         <BiSolidBookAlt
           className={activeButton === 'borrow' ? 'active' : ''}
           onClick={() => handleClick('borrow')}

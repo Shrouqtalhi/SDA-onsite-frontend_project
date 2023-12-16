@@ -14,12 +14,11 @@ export default function BorrowDetails() {
     dispatch(removeFromBorrow(id))
   }
   return (
-    <div className="main">
-      <UserSidebar />
+    <div className="books-dtl">
       <ul className="books">
         {borrowbooks.length > 0 &&
           borrowbooks.map((book) => (
-            <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
+            <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
               <img src={book.image} alt={book.title} />
               <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
               <div className="user-btn">

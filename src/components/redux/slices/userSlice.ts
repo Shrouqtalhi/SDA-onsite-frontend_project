@@ -11,13 +11,28 @@ type Credentials = {
   password: string
 }
 
-export const fetchUsers = createAsyncThunk('users/fetchusers', async () => {
-  const res = await api.get('/api/users')
-  console.log(res.data.users)
-  return res.data.users
+// Get All users
+export const usersThunk = createAsyncThunk('users/fetchusers', async () => {
+  try {
+    const res = await api.get('/api/users')
+    return res.data.users
+  } catch (error) {
+    console.log(error)
+  }
 })
 
-export const fetchUsersRegister = createAsyncThunk(
+// Delete user by ID
+export const deleteUser = createAsyncThunk('users/delete', async (id: string) => {
+  try {
+    await api.delete(`/api/users/${id}`)
+    return id
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// Register
+export const usersRegister = createAsyncThunk(
   'users/register',
   async (credentials: Credentials, { rejectWithValue }) => {
     try {
@@ -32,7 +47,8 @@ export const fetchUsersRegister = createAsyncThunk(
   }
 )
 
-export const fetchUsersLogin = createAsyncThunk(
+// Login
+export const usersLogin = createAsyncThunk(
   'users/login',
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
@@ -53,6 +69,7 @@ const storedUser = getUserFromLocalStorage() ? JSON.parse(getUserFromLocalStorag
 const initialState: InitialStateUsers = {
   users: [],
   isLoading: false,
+  success: null,
   error: null,
   isLoggedIn: isLoggedIn,
   userData: storedUser,
@@ -65,9 +82,6 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addUser: (state, action) => {
-      state.users.push(action.payload)
-    },
     updatedUser: (state, action: PayloadAction<Users>) => {
       const updatedUser = action.payload
       const updated = state.users.map((user) => {
@@ -78,10 +92,6 @@ const usersSlice = createSlice({
       })
       state.users = updated
       return state
-    },
-    removeUser: (state, action: PayloadAction<Users>) => {
-      const removeBook = state.users.filter((user) => user._id !== action.payload._id)
-      state.users = removeBook
     },
     blockUser: (state, action: PayloadAction<Users>) => {
       const foundUser = state.users.find((user) => user._id === action.payload._id)
@@ -130,14 +140,15 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsersRegister.pending, (state) => {
+      .addCase(usersRegister.pending, (state) => {
         state.isLoading = true
         state.error = null
       })
-      .addCase(fetchUsersRegister.fulfilled, (state) => {
+      .addCase(usersRegister.fulfilled, (state, action) => {
         state.isLoading = false
+        state.success = action.payload.msg as string
       })
-      .addCase(fetchUsersRegister.rejected, (state, action) => {
+      .addCase(usersRegister.rejected, (state, action) => {
         console.log(action)
         state.isLoading = false
         state.error = (action.payload as string) || 'An error occured'
@@ -146,13 +157,13 @@ const usersSlice = createSlice({
       //   state.isLoading = true
       //   state.error = null
       // })
-      .addCase(fetchUsersLogin.fulfilled, (state, action) => {
+      .addCase(usersLogin.fulfilled, (state, action) => {
         state.isLoading = false
         state.foundUser = action.payload.user
         state.isLoggedIn = isLoggedIn
         state.userData = storedUser
       })
-      .addCase(fetchUsersLogin.rejected, (state, action) => {
+      .addCase(usersLogin.rejected, (state, action) => {
         state.isLoading = false
         // if(typeof(action.payload )=== )
         state.error = (action.payload as string) || 'An error occured'
@@ -162,18 +173,25 @@ const usersSlice = createSlice({
       //   state.isLoading = true
       //   state.error = null
       // })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(usersThunk.fulfilled, (state, action) => {
         state.isLoading = false
         state.users = action.payload
       })
-    // .addCase(fetchUsers.rejected, (state, action) => {
-    //   state.isLoading = false
-    //   state.error = action.error.message || 'An error occured'
-    // })
+      // .addCase(fetchUsers.rejected, (state, action) => {
+      //   state.isLoading = false
+      //   state.error = action.error.message || 'An error occured'
+      // })
+
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        const userId = action.payload
+        const updatedUsers = state.users.filter((user) => user._id !== userId)
+        state.users = updatedUsers
+        return state
+      })
   }
 })
 
-export const { login, logout, removeUser, blockUser, addUser, updatedUser, updateProfile } =
-  usersSlice.actions
+export const { login, logout, blockUser, updatedUser, updateProfile } = usersSlice.actions
 
 export default usersSlice.reducer

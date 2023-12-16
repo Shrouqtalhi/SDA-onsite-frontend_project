@@ -25,30 +25,38 @@ export default function Navbar() {
               to="/contact"
               className={activeButton === 'contact' ? 'active' : ''}
               onClick={() => handleClick('contact')}>
-              <MdEmail />
-              Contact Us
+              <span>
+                <MdEmail />
+                Contact Us
+              </span>
             </Link>
             <Link
               to="/"
               className={activeButton === 'home' ? 'active' : ''}
               onClick={() => handleClick('home')}>
-              <BiSolidBookAlt />
-              Books
+              <span>
+                <BiSolidBookAlt />
+                Books
+              </span>
             </Link>
             <Link
               to={`/login`}
               className={activeButton === 'login' ? 'active' : ''}
               onClick={() => handleClick('login')}>
-              <BiLogInCircle />
-              Login
+              <span>
+                <BiLogInCircle />
+                Login
+              </span>
             </Link>
 
             <Link
               to="/register"
               className={activeButton === 'register' ? 'active' : ''}
               onClick={() => handleClick('register')}>
-              <TbUserSquare />
-              Register
+              <span>
+                <TbUserSquare />
+                Register
+              </span>
             </Link>
           </>
         )}

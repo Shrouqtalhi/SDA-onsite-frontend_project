@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { PiBooksFill, PiNotePencilBold } from 'react-icons/pi'
-import { fetchBooks, removeBook } from '../redux/slices/bookSlice'
+import { deleteBook, fetchBooks } from '../redux/slices/bookSlice'
 import { Link } from 'react-router-dom'
 import { TbHttpDelete } from 'react-icons/tb'
-import { Book } from '../type/type'
 
 export default function AdminBooks() {
   const dispatch = useDispatch<AppDispatch>()
@@ -18,8 +17,8 @@ export default function AdminBooks() {
     }
   }, [dispatch])
 
-  const handleBookDelete = (id: Book) => {
-    dispatch(removeBook(id))
+  const handleBookDelete = (id: string) => {
+    dispatch(deleteBook(id))
   }
 
   return (
@@ -55,7 +54,7 @@ export default function AdminBooks() {
                   <button
                     className="delete"
                     onClick={() => {
-                      handleBookDelete(book)
+                      handleBookDelete(book._id)
                     }}>
                     <label htmlFor="my-btn" title="delete">
                       <TbHttpDelete />

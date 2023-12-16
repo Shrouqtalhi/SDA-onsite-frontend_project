@@ -1,10 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { addUser, fetchUsersRegister } from '../redux/slices/userSlice'
+import { usersRegister } from '../redux/slices/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
-import { AxiosError } from 'axios'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -22,6 +21,7 @@ export default function Register() {
   console.log(userState)
   const [credentials, setCredentials] = useState(initState)
   const [error, setError] = useState<null | string>(null)
+  const [success, setSuccess] = useState<null | string>(null)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((users) => {
       return { ...users, [e.target.name]: e.target.value }
@@ -41,7 +41,7 @@ export default function Register() {
       return
     }
 
-    dispatch(fetchUsersRegister(credentials))
+    dispatch(usersRegister(credentials))
     setCredentials(initState)
 
     // navigate('/login')
@@ -109,6 +109,7 @@ export default function Register() {
           </Link>
         </span>
         {userState.error && <p style={{ color: 'red' }}>{userState.error}</p>}
+        {userState.success && <p style={{ color: 'green' }}>{userState.success}</p>}
       </form>
     </div>
   )
