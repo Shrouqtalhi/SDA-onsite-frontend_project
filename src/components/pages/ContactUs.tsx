@@ -16,7 +16,7 @@ export default function ContactUs() {
             admin
           </p>
         </div>
-        <img src="library.jpeg" />
+        <img src="book.jpeg" />
       </div>
     </>
   )

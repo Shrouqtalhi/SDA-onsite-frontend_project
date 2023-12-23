@@ -29,7 +29,7 @@ export default function BookById() {
     return <p> loading ....</p>
   }
   if (foundBook) {
-    const author = authors.find((author) => author.id === foundBook.authorId)
+    const author = authors.find((author) => author._id === foundBook.authorId)
     return (
       <div className="book-content-icon">
         {isLoggedIn ? (

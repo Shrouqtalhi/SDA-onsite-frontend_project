@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 
 import { Link } from 'react-router-dom'
-import { Book, Borrows } from '../type/type'
+import { Book, Borrows } from '../../types/type'
 
 export default function UserBorrows() {
   const state = useSelector((state: RootState) => state)

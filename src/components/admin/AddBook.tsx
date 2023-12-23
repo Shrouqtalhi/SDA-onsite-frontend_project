@@ -1,15 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { addBook } from '../redux/slices/bookSlice'
-import { Book } from '../type/type'
-import { AppDispatch } from '../redux/store'
-import { useDispatch } from 'react-redux'
+import { createBook } from '../redux/slices/bookSlice'
+import { Book } from '../../types/type'
+import { AppDispatch, RootState } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 const initValue: Book = {
   _id: '',
   image: '',
   title: '',
   description: '',
-  authorId: 0,
+  authorId: '',
   isAvailable: true,
   bookCopiesQty: 0,
   price: 0
@@ -19,6 +19,7 @@ export default function AddBook() {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const [add, setAdd] = useState<Book>(initValue)
+  const books = useSelector((state: RootState) => state.books)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -30,22 +31,30 @@ export default function AddBook() {
     setAdd({ ...add, [name]: Number(value) })
   }
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    const newBook = {
-      _id: add._id,
-      title: add.title,
-      description: add.description,
-      bookCopiesQty: add.bookCopiesQty,
-      authorId: add.authorId,
-      isAvailable: true,
-      image: add.image,
-      price: add.price
-    }
+  const handleSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault()
+      const newBook = {
+        _id: add._id,
+        title: add.title,
+        description: add.description,
+        bookCopiesQty: add.bookCopiesQty,
+        authorId: add.authorId,
+        isAvailable: true,
+        image: add.image,
+        price: add.price
+      }
 
-    dispatch(addBook(newBook))
-    setAdd(initValue)
-    // navigate('/admin/books')
+      const res = await dispatch(createBook(newBook))
+      if (res.meta.requestStatus === 'fulfilled') {
+        navigate('/admin/books')
+        setAdd(initValue)
+      }
+    } catch (error) {
+      console.error('Error creating book:', error)
+    } finally {
+      setAdd(initValue)
+    }
   }
   return (
     <>
@@ -109,6 +118,7 @@ export default function AddBook() {
         <button type="submit" className="add-btn">
           Add Book
         </button>
+        {books.error && <p style={{ color: 'red' }}>{books.error}</p>}
       </form>
     </>
   )

@@ -19,6 +19,8 @@ export default function UserSidebar() {
   const dispatch: AppDispatch = useDispatch()
   const handleLogout = () => {
     dispatch(logout())
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     navigate('/login')
   }
   return (

@@ -1,27 +1,43 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { Author } from '../type/type'
-import { updatedAuthor } from '../redux/slices/authorsSlice'
+import { Author } from '../../types/type'
+import { fetchAuthors, updateAuthorThunk } from '../redux/slices/authorsSlice'
 
 export default function EditAuthor() {
-  const params = useParams()
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
+  const params = useParams()
   const { authors } = useSelector((state: RootState) => state.authors)
-  const author = authors.find((author) => author.id === Number(params.id))
-  const [update, setUpdate] = useState<Author>(author as Author)
+  const author = authors.find((author) => author._id === params.id)
+  const [update, setUpdate] = useState<Author | undefined>(author)
+
+  useEffect(() => {
+    if (authors.length === 0) {
+      const handleGetAuthors = async () => {
+        const action = await dispatch(fetchAuthors())
+        const author = action.payload.find((author: Author) => author._id === params.id)
+        setUpdate(author)
+      }
+      handleGetAuthors()
+    }
+  }, [])
+  if (!update) {
+    return <p>Author Not found</p>
+  }
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setUpdate({ ...update, [name]: value })
-    return
   }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    dispatch(updatedAuthor(update))
-    navigate('/admin/authors')
+    if (params.id) {
+      dispatch(updateAuthorThunk({ id: params.id, updatedAuthor: update }))
+      navigate('/admin/authors')
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { InitialStateBorrows } from '../../type/type'
+import { InitialStateBorrows } from '../../../types/type'
 
 export const fetchBorrows = createAsyncThunk('users/fetchBorrows', async () => {
   const res = await axios.get('/library/borrows.json')

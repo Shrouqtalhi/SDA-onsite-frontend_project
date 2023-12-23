@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './redux/store'
 import { fetchBooks, filterByStatus } from './redux/slices/bookSlice'
-import UserSidebar from './user/UserSidebar'
 import { Link } from 'react-router-dom'
 import { GiBookCover } from 'react-icons/gi'
 import { BsEyeglasses } from 'react-icons/bs'
@@ -32,11 +31,11 @@ export default function FilterByStatus() {
       <ul className="books">
         {filteredBooks.length > 0 &&
           filteredBooks.map((book) => (
-            <li key={book.id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
+            <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
               <img src={book.image} alt={book.title} />
               <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
               <div className="user-btn">
-                <Link to={`/book/${book.id}`}>
+                <Link to={`/book/${book._id}`}>
                   <button className="more-dtl-btn">
                     <GiBookCover />
                   </button>

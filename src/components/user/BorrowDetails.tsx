@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
 import { TbHttpDelete } from 'react-icons/tb'
 import { removeFromBorrow } from '../redux/slices/borrowSlice'
-import { Book } from '../type/type'
+import { Book } from '../../types/type'
 
 export default function BorrowDetails() {
   const dispatch: AppDispatch = useDispatch()

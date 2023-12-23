@@ -12,7 +12,7 @@
 body {
   padding: 50px 68px;
   background-color: #010103;
-  color: white;
+  color: #43454b;
   font-family: 'Cormorant Garamond', serif;
 }
 
@@ -73,12 +73,12 @@ a {
   right: 0;
 }
 /* ********** NavBar ************* */
+
 .navbar {
   font-size: 20px;
   padding: 20px;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   gap: 70px;
   color: #383a3f;
   background-color: #1a1d21;
@@ -206,6 +206,9 @@ h2 {
   color: #c0a689;
   font-size: 30px;
   margin-bottom: 10px;
+}
+h3 {
+  color: #c0a689;
 }
 .book-content-icon {
   font-size: 30px;
@@ -384,21 +387,20 @@ h5 span {
 /* *********** Contact Us Page ************ */
 
 .main-contact {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: 500px 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #17191e;
   color: #343943;
   border-radius: 10px;
-  padding: 50px;
+  /* padding: 0px 50; */
   font-size: 20px;
   height: 80vh;
 }
 
 .main-contact img {
-  width: 400px;
-  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .contact {
@@ -432,20 +434,34 @@ h5 span {
 /* ************** Tables ************** */
 
 .table {
+  color: #efeded;
   text-align: left;
   width: 100%;
-  border: 1px solid #ffffff;
+  border: 1px solid #c0a689;
   margin-top: 20px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .table-head {
   font-size: large;
   text-transform: uppercase;
+
+  width: 100%;
+  border-bottom: 1px solid #c0a689;
 }
 .head {
-  margin: 100px 20px 100px 20px;
-  border-bottom: 1px solid #ffffff;
+  color: #bababa;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* ******** Media ************ */

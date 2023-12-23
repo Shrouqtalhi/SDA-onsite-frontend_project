@@ -3,7 +3,7 @@ import AdminSidebar from './AdminSidebar'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { Users } from '../type/type'
+import { Users } from '../../types/type'
 import { updatedUser } from '../redux/slices/userSlice'
 
 export default function EditUser() {

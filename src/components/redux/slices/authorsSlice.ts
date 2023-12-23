@@ -1,12 +1,33 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { Author, InitialStateAuthors } from '../../type/type'
+import { Author, AuthorsState } from '../../../types/type'
 import api from '../../../api'
+import { AxiosError } from 'axios'
 
-export const fetchAuthors = createAsyncThunk('authers/fetchAuthors', async () => {
+// Get All Authors
+export const fetchAuthors = createAsyncThunk('authers/get', async () => {
   const res = await api.get('/api/authors')
   return res.data
 })
-export const deleteAuthor = createAsyncThunk('authers/delete', async (id: string) => {
+
+// Create new Author
+export const createAuthor = createAsyncThunk(
+  'auther/post',
+  async (newAuthor: Author, { rejectWithValue }) => {
+    try {
+      const res = await api.post(`/api/authors`, newAuthor)
+      console.log(res)
+      return res.data.payload
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.msg)
+      }
+      console.log(error)
+    }
+  }
+)
+
+// Delete Author
+export const deleteAuthor = createAsyncThunk('autherId/delete', async (id: string) => {
   try {
     await api.delete(`/api/authors/${id}`)
     return id
@@ -15,7 +36,21 @@ export const deleteAuthor = createAsyncThunk('authers/delete', async (id: string
   }
 })
 
-const initialState: InitialStateAuthors = {
+// Delete Author
+export const updateAuthorThunk = createAsyncThunk(
+  'autherId/put',
+  async ({ id, updatedAuthor }: { id: string; updatedAuthor: Partial<Author> }) => {
+    try {
+      const res = await api.put(`/api/authors/${id}`, updatedAuthor)
+      console.log(res.data.payload)
+      return res.data.payload
+    } catch (error) {
+      console.log(error)
+    }
+  }
+)
+
+const initialState: AuthorsState = {
   authors: [],
   isLoading: false,
   error: null,
@@ -56,10 +91,36 @@ const authorsSlice = createSlice({
         state.isLoading = false
         state.error = action.error.message || 'An error occured'
       })
+      .addCase(createAuthor.fulfilled, (state, action) => {
+        state.isLoading = false
+        const newAuthor = action.payload
+        state.authors = [...state.authors, newAuthor]
+      })
+      .addCase(createAuthor.rejected, (state, action) => {
+        state.isLoading = false
+        if (typeof action.payload === 'string') {
+          state.error = action.payload
+          return
+        }
+        console.log(action.payload)
+      })
       .addCase(deleteAuthor.fulfilled, (state, action) => {
         state.isLoading = false
         const authorId = action.payload
         const updatedAuthors = state.authors.filter((author) => author._id !== authorId)
+        state.authors = updatedAuthors
+        return state
+      })
+      .addCase(updateAuthorThunk.fulfilled, (state, action) => {
+        state.isLoading = false
+        const updated = action.payload
+        console.log(action.payload)
+        const updatedAuthors = state.authors.map((author) => {
+          if (author._id === updated._id) {
+            return updated
+          }
+          return author
+        })
         state.authors = updatedAuthors
         return state
       })

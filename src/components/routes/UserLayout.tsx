@@ -14,7 +14,7 @@ export default function UserLayout() {
         <Route path="profile" element={<UserProfile />} />
         {/* <Route path="user/borrows" element={<Borrow />} /> */}
         <Route path="borrow-details" element={<BorrowDetails />} />
-        <Route path="borrowbook/:id" element={<UserBorrows />} />
+        <Route path="borrowbook/:bookId/:userId" element={<UserBorrows />} />
         <Route path="books" element={<UserBooks />} />
       </Routes>
     </div>

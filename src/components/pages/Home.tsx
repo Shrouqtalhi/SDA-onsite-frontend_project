@@ -20,7 +20,7 @@ export default function Home() {
 
   const filteredBooks = search
     ? books.filter((book) => {
-        const matchingAuthor = authors.find((author) => author.id === book.authorId)
+        const matchingAuthor = authors.find((author) => author._id === book.authorId)
         return (
           book.title.toLowerCase().includes(search.toLowerCase()) ||
           (matchingAuthor && matchingAuthor.name.toLowerCase().includes(search.toLowerCase()))

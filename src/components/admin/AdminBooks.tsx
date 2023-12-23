@@ -1,19 +1,47 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { GiBookCover } from 'react-icons/gi'
 import { PiBooksFill, PiNotePencilBold } from 'react-icons/pi'
-import { deleteBook, fetchBooks } from '../redux/slices/bookSlice'
-import { Link } from 'react-router-dom'
+import { deleteBook, fetchBooks, getBookPaginatedThunk } from '../redux/slices/bookSlice'
+import { Link, useSearchParams } from 'react-router-dom'
 import { TbHttpDelete } from 'react-icons/tb'
 
 export default function AdminBooks() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch<AppDispatch>()
-  const { books, isLoading, error } = useSelector((state: RootState) => state.books)
+  const { books, isLoading } = useSelector((state: RootState) => state.books)
+  const [pagination, setPagination] = useState({
+    page: 0,
+    totalPage: 0
+  })
+  const page = searchParams.get('page') || 1
+
+  const totalPages = pagination.totalPage
+
+  const handelBooksPagination = async () => {
+    try {
+      const action = await dispatch(getBookPaginatedThunk(1))
+      setPagination({ page: action.payload.page, totalPage: action.payload.totalPage })
+      setSearchParams({ page: page.toString() })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handelBooksPaginationByPage = async (pageNumber: number) => {
+    try {
+      const action = await dispatch(getBookPaginatedThunk(pageNumber))
+      setPagination({ page: action.payload.page, totalPage: action.payload.totalPage })
+      setSearchParams({ page: pageNumber.toString() })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (books.length === 0) {
       dispatch(fetchBooks())
+      handelBooksPagination()
     }
   }, [dispatch])
 
@@ -24,16 +52,16 @@ export default function AdminBooks() {
   return (
     <>
       {isLoading && <h3> Loading Books...</h3>}
-      {error && <h3> {error}</h3>}
-
       <div className="books-dtl">
         <h2>
           <PiBooksFill />
           Books..
         </h2>
-        <Link to="/admin/add-book">
-          <button className="add-new-book">+ Add Book</button>
-        </Link>
+        <div>
+          <Link to="/admin/add-book">
+            <button className="add-new-book">+ Add Book</button>
+          </Link>
+        </div>
         <ul className="books">
           {books.length > 0 &&
             books.map((book) => (
@@ -64,6 +92,11 @@ export default function AdminBooks() {
               </li>
             ))}
         </ul>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+          <button key={pageNumber} onClick={() => handelBooksPaginationByPage(pageNumber)}>
+            {pageNumber}
+          </button>
+        ))}
       </div>
     </>
   )

@@ -37,15 +37,15 @@ export default function AuthorsList() {
 
         <table className="table">
           <thead className="table-head">
-            <tr>
-              <th className="head">Author Name</th>
-              <th className="head">Actions</th>
+            <tr className="head">
+              <th>Author Name</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {authors.length > 0 &&
               authors.map((author) => (
-                <tr key={author._id}>
+                <tr key={author._id} className="table-body">
                   <td>{author.name}</td>
                   <td>
                     <div className="user-btn">

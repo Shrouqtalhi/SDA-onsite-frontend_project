@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { usersLogin } from '../redux/slices/userSlice'
+import { clearError, usersLogin } from '../redux/slices/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -17,6 +17,11 @@ export default function Login() {
   })
 
   const usersState = useSelector((state: RootState) => state.users)
+  useEffect(() => {
+    return () => {
+      dispatch(clearError())
+    }
+  }, [])
   const handeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((state) => {
       return { ...state, [e.target.name]: e.target.value }
@@ -35,7 +40,7 @@ export default function Login() {
         if (user.role === ROLES.ADMIN) {
           navigate(`/admin/books`)
         } else if (user.role === ROLES.USER) {
-          navigate('/')
+          navigate('/user/books')
         }
       }
     })
@@ -73,8 +78,11 @@ export default function Login() {
         <span>
           Create Account!{' '}
           <Link to="/register" style={{ color: '#d3ad7f' }}>
-            register now
+            register now!
           </Link>
+        </span>
+        <span>
+          <Link to="/forgot-password">Forgot Password?</Link>
         </span>
         {usersState.error && <p style={{ color: 'red' }}>{usersState.error}</p>}
       </form>

@@ -16,7 +16,7 @@ export default function Navbar() {
   const handleClick = (icon: string) => {
     setActiveButton(icon)
   }
-  if (!isLoggedIn || (isLoggedIn && userData?.role !== ROLES.ADMIN)) {
+  if (!isLoggedIn) {
     return (
       <nav className="navbar">
         {!isLoggedIn && (
@@ -63,10 +63,9 @@ export default function Navbar() {
         {isLoggedIn && (
           <Link
             to={`/${userData?.role}/books`}
-            className={activeButton === 'dashboard' ? 'active' : ''}
+            className={` ${isLoggedIn ? 'active' : ''}`}
             onClick={() => handleClick('dashboard')}>
-            <FaUserTie />
-            {userData?.role}
+            <FaUserTie /> {userData?.firstName} {userData?.lastName}
           </Link>
         )}
       </nav>

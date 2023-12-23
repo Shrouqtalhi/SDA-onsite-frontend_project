@@ -1,12 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
-import { usersRegister } from '../redux/slices/userSlice'
+import { clearError, usersRegister } from '../redux/slices/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
 
 export default function Register() {
-  const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
   const initState = {
@@ -20,8 +18,11 @@ export default function Register() {
   const userState = useSelector((state: RootState) => state.users)
   console.log(userState)
   const [credentials, setCredentials] = useState(initState)
-  const [error, setError] = useState<null | string>(null)
-  const [success, setSuccess] = useState<null | string>(null)
+  useEffect(() => {
+    return () => {
+      dispatch(clearError())
+    }
+  }, [])
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCredentials((users) => {
       return { ...users, [e.target.name]: e.target.value }
@@ -30,21 +31,10 @@ export default function Register() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    // const newUser = { id: new Date().getTime(), ...user }
-    if (
-      !credentials.email ||
-      !credentials.password ||
-      !credentials.firstName ||
-      !credentials.lastName
-    ) {
-      setError('Please fill out all required fields (email, password, first name, last name)')
-      return
-    }
 
     dispatch(usersRegister(credentials))
-    setCredentials(initState)
 
-    // navigate('/login')
+    setCredentials(initState)
   }
   return (
     <div>

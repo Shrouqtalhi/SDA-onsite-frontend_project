@@ -1,36 +1,50 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
-import AdminSidebar from './AdminSidebar'
-import { Book } from '../type/type'
-import { updatedBook } from '../redux/slices/bookSlice'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { Book } from '../../types/type'
+import { fetchBookById, fetchBooks, updateBookThunk } from '../redux/slices/bookSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 
 export default function EditBook() {
-  const { books } = useSelector((state: RootState) => state.books)
   const params = useParams()
   const dispatch: AppDispatch = useDispatch()
+  const { books } = useSelector((state: RootState) => state.books)
   const navigate = useNavigate()
-  const book = books.find((book) => book.id === Number(params.id))
-  const [updateBook, setUpdateBook] = useState<Book>(book as Book)
+  const book = books.find((book) => book._id === params.id)
+  const [updateBook, setUpdateBook] = useState<Book | undefined>(book)
+
+  useEffect(() => {
+    if (books.length === 0) {
+      const handleGetBooks = async () => {
+        if (params.id) {
+          const action = await dispatch(fetchBookById(params.id))
+          setUpdateBook(action.payload)
+        }
+      }
+      handleGetBooks()
+    }
+  }, [])
+
+  if (!updateBook) {
+    return <p>Book not found</p>
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setUpdateBook({ ...updateBook, [name]: value })
-    return
   }
 
   const handleChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setUpdateBook({ ...updateBook, [name]: Number(value) })
-
-    return
   }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    dispatch(updatedBook(updateBook))
-    navigate('/admin/books')
+    if (params.id) {
+      dispatch(updateBookThunk({ bookId: params.id, updatedBook: updateBook }))
+      navigate('/admin/books')
+    }
   }
 
   return (
@@ -45,7 +59,7 @@ export default function EditBook() {
           type="text"
           name="title"
           placeholder="Title"
-          value={updateBook?.title}
+          value={updateBook.title}
           onChange={handleChange}
         />
 
@@ -56,7 +70,7 @@ export default function EditBook() {
           type="text"
           name="description"
           placeholder="Book Description"
-          value={updateBook?.description}
+          value={updateBook.description}
           onChange={handleChange}
         />
 
@@ -68,7 +82,7 @@ export default function EditBook() {
           type="number"
           name="bookCopiesQty"
           placeholder="bookCopiesQty"
-          value={updateBook?.bookCopiesQty}
+          value={updateBook.bookCopiesQty}
           onChange={handleChangeNumber}
         />
 

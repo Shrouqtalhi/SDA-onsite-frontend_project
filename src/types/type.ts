@@ -1,20 +1,29 @@
 import { ThunkDispatch } from '@reduxjs/toolkit'
-import { fetchAuthors } from '../redux/slices/authorsSlice'
-import { RootState } from '../redux/store'
-import { ROLES } from '../../constants'
+import { fetchAuthors } from '../components/redux/slices/authorsSlice'
+import { RootState } from '../components/redux/store'
+import { ROLES } from '../constants'
+
+export type DecodedUser = {
+  userId: string
+  email: string
+  role: Role
+  iat: number
+  exp: number
+}
 
 export type Book = {
   _id: string
   image: string
   title: string
   description: string
-  authorId: number
+  authorId: string
   isAvailable: boolean
   bookCopiesQty: number
   price: number //* new
 }
 
-export type InitialState = {
+export type BooksState = {
+  originalBooks: Book[]
   books: Book[]
   isLoading: boolean
   error: null | string
@@ -27,7 +36,7 @@ export type Author = {
   name: string
 }
 
-export type InitialStateAuthors = {
+export type AuthorsState = {
   authors: Author[]
   isLoading: boolean
   error: string | null
@@ -35,9 +44,9 @@ export type InitialStateAuthors = {
   search: string
 }
 
-type Role = keyof typeof ROLES
+export type Role = keyof typeof ROLES
 
-export type Users = {
+export type User = {
   _id: string
   firstName: string
   lastName: string
@@ -56,15 +65,18 @@ export type Borrows = {
   dueDate: string
 }
 
-export type InitialStateUsers = {
-  users: Users[]
+export type UsersState = {
+  users: User[]
   isLoading: boolean
   success: string | null
   error: string | null
   isLoggedIn: boolean
-  userData: Users | null
+  // isAdmin: boolean
+  // isActive: boolean
+  // role: Role
+  userData: User | null
   block: boolean
-  foundUser: Users | null
+  foundUser: User | null
   borrowedBooks: Book[]
 }
 
