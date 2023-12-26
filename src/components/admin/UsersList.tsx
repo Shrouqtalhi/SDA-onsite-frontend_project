@@ -89,6 +89,7 @@ export default function UsersList() {
                     </td>
                     <td>
                       <select
+                        className="select-role"
                         name="roles"
                         title="roles"
                         onChange={(e) => handleGrantRole(e, user._id)}>

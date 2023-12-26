@@ -1,40 +1,49 @@
 import { useDispatch, useSelector } from 'react-redux'
-import UserSidebar from './UserSidebar'
 import { AppDispatch, RootState } from '../redux/store'
-import { Link } from 'react-router-dom'
 import { TbHttpDelete } from 'react-icons/tb'
-import { removeFromBorrow } from '../redux/slices/borrowSlice'
-import { Book } from '../../types/type'
+import { getBorrowsByUserId, returnBorrowedBook } from '../redux/slices/borrowSlice'
+import { useEffect, useState } from 'react'
 
 export default function BorrowDetails() {
   const dispatch: AppDispatch = useDispatch()
-  const { borrowbooks } = useSelector((state: RootState) => state.borrows)
-
-  const handleBookDelete = (id: Book) => {
-    dispatch(removeFromBorrow(id))
+  const state = useSelector((state: RootState) => state)
+  const borrowState = state.borrows
+  const { borrows } = useSelector((state: RootState) => state.borrows)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  console.log('==========', borrows)
+  useEffect(() => {
+    const res = dispatch(getBorrowsByUserId())
+    console.log('hayyy res ', res)
+  }, [dispatch])
+  const handleBookDelete = (id: string) => {
+    dispatch(returnBorrowedBook(id))
   }
+
   return (
     <div className="books-dtl">
       <ul className="books">
-        {borrowbooks.length > 0 &&
-          borrowbooks.map((book) => (
-            <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
-              <img src={book.image} alt={book.title} />
-              <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
-              <div className="user-btn">
+        {borrows.length > 0 &&
+          borrows.map((book) => (
+            <li key={book._id} className="book">
+              <img src={book.bookId.image} alt={book._id} />
+              <h6>Borrow Date:</h6>
+              <h6>{book.borrowDate}</h6>
+              <h6>Borrow Date:</h6>
+              <h6>{book.dueDate}</h6>
+              <div className="return-btn">
                 <button
-                  className="delete"
                   onClick={() => {
-                    handleBookDelete(book)
+                    handleBookDelete(book._id)
                   }}>
-                  <label htmlFor="my-bton" title="delete">
-                    <TbHttpDelete />
-                  </label>
+                  Return
                 </button>
               </div>
             </li>
           ))}
       </ul>
+      {borrowState.error && <p style={{ color: 'red' }}>{borrowState.error}</p>}
+      {message && <p style={{ color: 'green' }}>{message}</p>}
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FaHome } from 'react-icons/fa'
 import { BiSolidBookAlt } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../redux/store'
 import { logout } from '../redux/slices/userSlice'
@@ -25,7 +25,7 @@ export default function UserSidebar() {
   }
   return (
     <nav className="sidebar">
-      <Link to="/user/profile">
+      <Link to={`/user/profile`}>
         <AiOutlineProfile
           className={activeButton === 'profile' ? 'active' : ''}
           onClick={() => handleClick('profile')}
@@ -37,8 +37,7 @@ export default function UserSidebar() {
           onClick={() => handleClick('books')}
         />
       </Link>
-
-      <Link to="/user/borrow-details">
+      <Link to={`/user/borrow-details`}>
         <BiSolidBookAlt
           className={activeButton === 'borrow' ? 'active' : ''}
           onClick={() => handleClick('borrow')}

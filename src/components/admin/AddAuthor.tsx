@@ -13,7 +13,6 @@ export default function AddAuthor() {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
   const author = useSelector((state: RootState) => state.authors)
-  console.log(author)
   const [add, setAdd] = useState<Author>(initValue)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

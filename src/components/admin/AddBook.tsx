@@ -9,7 +9,7 @@ const initValue: Book = {
   image: '',
   title: '',
   description: '',
-  authorId: '',
+  authorId: [],
   isAvailable: true,
   bookCopiesQty: 0,
   price: 0

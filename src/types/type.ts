@@ -16,7 +16,7 @@ export type Book = {
   image: string
   title: string
   description: string
-  authorId: string
+  authorId: string[]
   isAvailable: boolean
   bookCopiesQty: number
   price: number //* new
@@ -57,9 +57,9 @@ export type User = {
 }
 
 export type Borrows = {
-  _id: number
-  borrowerId: number
-  bookId: number
+  _id: string
+  userId: string
+  bookId: Book
   borrowDate: string
   returnDate: null
   dueDate: string
@@ -71,9 +71,6 @@ export type UsersState = {
   success: string | null
   error: string | null
   isLoggedIn: boolean
-  // isAdmin: boolean
-  // isActive: boolean
-  // role: Role
   userData: User | null
   block: boolean
   foundUser: User | null

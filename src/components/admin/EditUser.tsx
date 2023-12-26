@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import AdminSidebar from './AdminSidebar'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { Users } from '../../types/type'
+import { User } from '../../types/type'
 import { updatedUser } from '../redux/slices/userSlice'
 
 export default function EditUser() {
@@ -11,8 +10,8 @@ export default function EditUser() {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
   const { users } = useSelector((state: RootState) => state.users)
-  const user = users.find((user) => user.id === Number(params.id))
-  const [update, setUpdate] = useState<Users>(user as Users)
+  const user = users.find((user) => user._id === params.id)
+  const [update, setUpdate] = useState<User>(user as User)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setUpdate({ ...update, [name]: value })

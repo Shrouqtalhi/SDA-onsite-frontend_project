@@ -26,6 +26,16 @@ export const usersThunk = createAsyncThunk('users/fetchusers', async () => {
     console.log(error)
   }
 })
+// Get All users
+export const getUserById = createAsyncThunk('users/getById', async (id: string) => {
+  try {
+    const res = await api.get(`/api/users/${id}`)
+    console.log('userrrr', res.data)
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // Delete user by ID
 export const deleteUser = createAsyncThunk('users/delete', async (id: string) => {
@@ -48,6 +58,28 @@ export const grantRole = createAsyncThunk(
       })
       return res.data.user
     } catch (error) {
+      console.log(error)
+    }
+  }
+)
+
+// Update Profile
+export const updateUserProfile = createAsyncThunk(
+  'users/profile',
+  async (
+    { updatedUser, id }: { updatedUser: Partial<User>; id: User['_id'] },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await api.put(`/api/users/profile/${id}`, updatedUser)
+      localStorage.setItem('user', JSON.stringify(res.data))
+
+      return res.data
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error)
+        return rejectWithValue(error.response?.data.msg)
+      }
       console.log(error)
     }
   }
@@ -223,6 +255,11 @@ const usersSlice = createSlice({
           return user
         })
         state.users = updatedUsers
+        return state
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.userData = action.payload
         return state
       })
   }

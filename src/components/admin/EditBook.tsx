@@ -1,23 +1,26 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Book } from '../../types/type'
-import { fetchBookById, fetchBooks, updateBookThunk } from '../redux/slices/bookSlice'
+import { fetchBookById, updateBookThunk } from '../redux/slices/bookSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
+import { fetchAuthors } from '../redux/slices/authorsSlice'
 
 export default function EditBook() {
   const params = useParams()
   const dispatch: AppDispatch = useDispatch()
   const { books } = useSelector((state: RootState) => state.books)
+  const { authors } = useSelector((state: RootState) => state.authors)
   const navigate = useNavigate()
   const book = books.find((book) => book._id === params.id)
   const [updateBook, setUpdateBook] = useState<Book | undefined>(book)
-
+  console.log(updateBook)
   useEffect(() => {
     if (books.length === 0) {
       const handleGetBooks = async () => {
         if (params.id) {
           const action = await dispatch(fetchBookById(params.id))
+          await dispatch(fetchAuthors())
           setUpdateBook(action.payload)
         }
       }
@@ -29,8 +32,13 @@ export default function EditBook() {
     return <p>Book not found</p>
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
+
+    if (name === 'author') {
+      setUpdateBook({ ...updateBook, authorId: [value] })
+      return
+    }
     setUpdateBook({ ...updateBook, [name]: value })
   }
 
@@ -46,7 +54,7 @@ export default function EditBook() {
       navigate('/admin/books')
     }
   }
-
+  console.log(updateBook.authorId)
   return (
     <>
       <form onSubmit={handleSubmit} className="add-form">
@@ -86,6 +94,31 @@ export default function EditBook() {
           onChange={handleChangeNumber}
         />
 
+        <label htmlFor="discription" className="form-lable">
+          Price
+        </label>
+
+        <input
+          type="number"
+          name="price"
+          placeholder="price"
+          value={updateBook.price}
+          onChange={handleChangeNumber}
+        />
+
+        <select
+          className="select-role"
+          name="author"
+          title="author"
+          onChange={handleChange}
+          value={updateBook.authorId[0]}>
+          <option>Select Author</option>
+          {authors.map((author) => (
+            <option key={author._id} value={author._id}>
+              {author.name}
+            </option>
+          ))}
+        </select>
         <label htmlFor="image" className="form-lable">
           Image URL:
         </label>

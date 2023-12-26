@@ -23,8 +23,10 @@ export default function BorrowsList() {
           {borrows.length > 0 &&
             borrows.map((borrow) => (
               <li key={borrow._id}>
-                <h2>Borrower ID : {borrow.borrowerId}</h2>
-                <span>Book ID : {borrow.bookId}</span>
+                <h2>Borrower ID : {borrow._id}</h2>
+                {/* {borrow.bookId.map((book) => (
+                  <span key={book._id}>Book ID : {book.description}</span>
+                ))} */}
                 <div className="borrow-date">
                   <p>
                     Borrow Date: <span>{borrow.borrowDate}</span>

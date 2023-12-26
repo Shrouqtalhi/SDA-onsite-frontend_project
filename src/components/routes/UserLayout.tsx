@@ -4,6 +4,7 @@ import UserProfile from '../user/UserProfile'
 import BorrowDetails from '../user/BorrowDetails'
 import UserBorrows from '../user/UserBorrows'
 import UserSidebar from '../user/UserSidebar'
+import FilterByStatus from '../FilterByStatus'
 
 export default function UserLayout() {
   return (
@@ -12,10 +13,12 @@ export default function UserLayout() {
       <Routes>
         <Route path="user" element={<UserBooks />} />
         <Route path="profile" element={<UserProfile />} />
+
         {/* <Route path="user/borrows" element={<Borrow />} /> */}
         <Route path="borrow-details" element={<BorrowDetails />} />
         <Route path="borrowbook/:bookId/:userId" element={<UserBorrows />} />
         <Route path="books" element={<UserBooks />} />
+        <Route path="available-book" element={<FilterByStatus />} />
       </Routes>
     </div>
   )

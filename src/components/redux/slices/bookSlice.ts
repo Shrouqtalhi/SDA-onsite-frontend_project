@@ -7,7 +7,6 @@ import { AxiosError } from 'axios'
 export const fetchBooks = createAsyncThunk('books/get', async () => {
   // const res = await axios.get('/library/books.json')
   const res = await api.get('/api/books')
-  console.log(res.data)
   return res.data.payload
 })
 
@@ -52,6 +51,17 @@ export const updateBookThunk = createAsyncThunk(
   }
 )
 
+// Add Authors To Book
+export const addAuthorToBook = createAsyncThunk('autherId/author', async () => {
+  try {
+    const res = await api.put(`/api/books/authors`)
+    console.log(res.data.payload)
+    return res.data.payload
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 // Delete Book
 export const deleteBook = createAsyncThunk('bookId/delete', async (id: string) => {
   try {
@@ -66,10 +76,21 @@ export const deleteBook = createAsyncThunk('bookId/delete', async (id: string) =
 export const getBookPaginatedThunk = createAsyncThunk('book/pagination', async (page: number) => {
   try {
     const res = await api.get(`/api/books?page=${page}`)
-    console.log(res.data)
     return res.data
   } catch (error) {
     console.log(error)
+  }
+})
+
+// Search
+export const getBooksRequestThunk = createAsyncThunk('request/get', async (params: string) => {
+  try {
+    // console.log('==', params)
+    const res = await api.get(`/api/books?${params}`)
+    console.log('res from requst books thunk', res.data)
+    return res.data
+  } catch (error) {
+    console.log('err', error)
   }
 })
 
@@ -166,7 +187,16 @@ const bookSlice = createSlice({
         state.books = updatedBook
         return state
       })
+      .addCase(addAuthorToBook.fulfilled, (state, action) => {
+        state.isLoading = false
+        const updated = action.payload
+        console.log(updated)
+      })
       .addCase(getBookPaginatedThunk.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.books = action.payload.payload
+      })
+      .addCase(getBooksRequestThunk.fulfilled, (state, action) => {
         state.isLoading = false
         state.books = action.payload.payload
       })

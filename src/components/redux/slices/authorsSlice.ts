@@ -19,7 +19,8 @@ export const createAuthor = createAsyncThunk(
       return res.data.payload
     } catch (error) {
       if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data.msg)
+        console.log(error.response?.data.msg[0].message)
+        return rejectWithValue(error.response?.data.msg[0].message)
       }
       console.log(error)
     }
@@ -39,13 +40,19 @@ export const deleteAuthor = createAsyncThunk('autherId/delete', async (id: strin
 // Delete Author
 export const updateAuthorThunk = createAsyncThunk(
   'autherId/put',
-  async ({ id, updatedAuthor }: { id: string; updatedAuthor: Partial<Author> }) => {
+  async (
+    { id, updatedAuthor }: { id: string; updatedAuthor: Partial<Author> },
+    { rejectWithValue }
+  ) => {
     try {
       const res = await api.put(`/api/authors/${id}`, updatedAuthor)
       console.log(res.data.payload)
       return res.data.payload
     } catch (error) {
-      console.log(error)
+      if (error instanceof AxiosError) {
+        console.log(error)
+        return rejectWithValue(error.response?.data.msg[0].message)
+      }
     }
   }
 )
@@ -98,11 +105,12 @@ const authorsSlice = createSlice({
       })
       .addCase(createAuthor.rejected, (state, action) => {
         state.isLoading = false
+        console.log(action.payload)
         if (typeof action.payload === 'string') {
           state.error = action.payload
           return
         }
-        console.log(action.payload)
+        state.error = 'An error occured'
       })
       .addCase(deleteAuthor.fulfilled, (state, action) => {
         state.isLoading = false
@@ -123,6 +131,16 @@ const authorsSlice = createSlice({
         })
         state.authors = updatedAuthors
         return state
+      })
+
+      .addCase(updateAuthorThunk.rejected, (state, action) => {
+        state.isLoading = false
+        console.log(action.payload)
+        if (typeof action.payload === 'string') {
+          state.error = action.payload
+          return
+        }
+        state.error = 'An error occured'
       })
   }
 })

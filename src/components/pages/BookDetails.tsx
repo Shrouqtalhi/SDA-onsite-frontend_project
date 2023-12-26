@@ -29,7 +29,11 @@ export default function BookById() {
     return <p> loading ....</p>
   }
   if (foundBook) {
-    const author = authors.find((author) => author._id === foundBook.authorId)
+    const selectedAuthors = authors.filter((author) => {
+      const found = foundBook.authorId.find((currentAuthor) => currentAuthor === author._id)
+      return found
+    })
+    console.log('selectedAuthors', selectedAuthors)
     return (
       <div className="book-content-icon">
         {isLoggedIn ? (
@@ -48,7 +52,15 @@ export default function BookById() {
               <div className="book-discription">
                 <h2>{foundBook.title}</h2>
                 <div className="book-dtl">
-                  <span>By {author && <span className="home-icon"> {author.name}</span>}</span>
+                  <span>
+                    By{' '}
+                    {selectedAuthors.length > 0 && (
+                      <span className="home-icon">
+                        {' '}
+                        {selectedAuthors.map((author) => author.name).join(', ')}
+                      </span>
+                    )}
+                  </span>
                 </div>
                 <h5>
                   <AiOutlineStar />

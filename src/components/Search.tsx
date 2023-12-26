@@ -25,10 +25,10 @@ export default function Search() {
       </div>
 
       <div className="user-btn">
-        <Link to="/available-book">
+        <Link to="/user/available-book">
           <button className="more-dtl-btn">Available Books</button>
         </Link>
-        <Link to="/">
+        <Link to="/user/books">
           <button className="borrow-btn" onClick={() => handleGetAllBooks()}>
             All
           </button>

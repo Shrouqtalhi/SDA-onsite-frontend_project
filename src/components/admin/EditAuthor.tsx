@@ -10,6 +10,7 @@ export default function EditAuthor() {
   const navigate = useNavigate()
   const params = useParams()
   const { authors } = useSelector((state: RootState) => state.authors)
+  const authorState = useSelector((state: RootState) => state.authors)
   const author = authors.find((author) => author._id === params.id)
   const [update, setUpdate] = useState<Author | undefined>(author)
 
@@ -32,11 +33,13 @@ export default function EditAuthor() {
     setUpdate({ ...update, [name]: value })
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (params.id) {
-      dispatch(updateAuthorThunk({ id: params.id, updatedAuthor: update }))
-      navigate('/admin/authors')
+      const res = await dispatch(updateAuthorThunk({ id: params.id, updatedAuthor: update }))
+      if (res.meta.requestStatus === 'fulfilled') {
+        navigate('/admin/authors')
+      }
     }
   }
 
@@ -59,6 +62,7 @@ export default function EditAuthor() {
         <button type="submit" className="add-btn">
           Edit Author
         </button>
+        {authorState.error && <p style={{ color: 'red' }}>{authorState.error}</p>}
       </form>
     </>
   )

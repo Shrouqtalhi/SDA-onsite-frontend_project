@@ -92,11 +92,13 @@ export default function AdminBooks() {
               </li>
             ))}
         </ul>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-          <button key={pageNumber} onClick={() => handelBooksPaginationByPage(pageNumber)}>
-            {pageNumber}
-          </button>
-        ))}
+        <div className="pagination-button">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+            <button key={pageNumber} onClick={() => handelBooksPaginationByPage(pageNumber)}>
+              {pageNumber}
+            </button>
+          ))}
+        </div>
       </div>
     </>
   )
