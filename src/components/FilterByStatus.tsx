@@ -9,6 +9,7 @@ import Search from './Search'
 
 export default function FilterByStatus() {
   const dispatch: AppDispatch = useDispatch()
+  const { userData } = useSelector((state: RootState) => state.users)
   const { isLoading, error, books, search } = useSelector((state: RootState) => state.books)
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function FilterByStatus() {
   return (
     <>
       <div className="books-dtl">
-        <Search />
+        {/* <Search /> */}
         {isLoading && <h3> Loading products...</h3>}
         {error && <h3> {error}</h3>}
         <ul className="books">
@@ -41,7 +42,7 @@ export default function FilterByStatus() {
                       <GiBookCover />
                     </button>
                   </Link>
-                  <Link to="/user/borrows">
+                  <Link to={`/user/borrowbook/${book._id}/${userData?._id}`}>
                     <button className="borrow-btn">
                       <BsEyeglasses />
                     </button>

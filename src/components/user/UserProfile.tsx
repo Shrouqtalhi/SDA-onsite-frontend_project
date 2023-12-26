@@ -32,6 +32,7 @@ export default function UserProfile() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     dispatch(updateUserProfile({ id: userData._id, updatedUser: user }))
+    setIsOpen(false)
   }
 
   return (

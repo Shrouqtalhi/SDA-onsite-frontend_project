@@ -10,17 +10,15 @@ import Search from '../Search'
 export default function UserBooks() {
   const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch<AppDispatch>()
-  const { books, isLoading, error, search } = useSelector((state: RootState) => state.books)
-  const { foundUser } = useSelector((state: RootState) => state.users)
+  const { books, isLoading, error } = useSelector((state: RootState) => state.books)
+  const { userData } = useSelector((state: RootState) => state.users)
   const [pagination, setPagination] = useState({
     page: 0,
     totalPage: 0
   })
 
   const page = searchParams.get('page') || 1
-  // const search = searchParams.get('search') || ''
-
-  console.log('search', searchParams.get('sreach') || '')
+  const title = searchParams.get('title') || ''
 
   const totalPages = pagination.totalPage
 
@@ -43,38 +41,32 @@ export default function UserBooks() {
     }
   }
   useEffect(() => {
-    // dispatch(fetchBooks())
-    if (page && search) {
-      handleGetBooksByName(search, pagination.page)
-    } else {
-      dispatch(getBooksRequestThunk(searchParams.toString()))
+    if (page && title) {
+      handleGetBooksByTitle(title, pagination.page)
+    } else if (page) {
       handelBooksPagination()
+    } else {
+      dispatch(fetchBooks())
     }
-  }, [])
+  }, [dispatch])
 
-  const handleGetBooksByName = async (title: string, page: number) => {
-    searchParams.set('search ', search)
+  const handleGetBooksByTitle = async (title: string, page: number) => {
+    searchParams.set('title ', title)
     searchParams.set('page', page.toString())
     setSearchParams(searchParams)
 
     dispatch(getBooksRequestThunk(searchParams.toString()))
   }
-  // Search
-  const filteredBooks = search
-    ? books.filter((book) => {
-        return book.title.toLowerCase().includes(search.toLowerCase())
-      })
-    : books
 
   return (
     <>
       <div className="books-dtl">
-        <Search />
+        <Search searchParams={searchParams} setSearchParams={setSearchParams} />
         {isLoading && <h3> Loading products...</h3>}
         {error && <h3> {error}</h3>}
         <ul className="books">
-          {filteredBooks.length > 0 &&
-            filteredBooks.map((book) => (
+          {books.length > 0 &&
+            books.map((book) => (
               <li key={book._id} className={`book ${!book.isAvailable ? 'sold-out' : ''}`}>
                 <img src={book.image} alt={book.title} />
                 <span>{!book.isAvailable ? 'SOLD OUT' : book.title}</span>
@@ -86,7 +78,7 @@ export default function UserBooks() {
                     </button>
                   </Link>
                   {book.isAvailable && (
-                    <Link to={`/user/borrowbook/${book._id}/${foundUser?._id}`}>
+                    <Link to={`/user/borrowbook/${book._id}/${userData?._id}`}>
                       <button className="borrow-btn">
                         <BsEyeglasses />
                       </button>

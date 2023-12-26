@@ -12,13 +12,13 @@
 body {
   padding: 50px 68px;
   background-color: #010103;
-  color: #43454b;
+  color: #5d6068;
   font-family: 'Cormorant Garamond', serif;
 }
 
 a {
   text-decoration: none;
-  color: #383a3f;
+  color: #4a4c52;
 }
 
 .container {
@@ -120,7 +120,6 @@ a {
 
 .books {
   border-radius: 10px;
-
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
@@ -130,6 +129,7 @@ a {
   /* background-color: #1a1d21; */
   padding: 50px;
   overflow: auto;
+  height: 80vh;
 }
 
 .books img {
@@ -232,13 +232,15 @@ h2 {
   font-size: 30px;
   margin-bottom: 10px;
 }
+
 h3 {
   color: #c0a689;
 }
+
 .book-content-icon {
   font-size: 30px;
   padding: 20px;
-  margin: 30px;
+  border-radius: 5px;
   height: 100vh;
   background-image: linear-gradient(160deg, #17191e, #1b1e24, #252930, #3a3f48, #41434d);
 }
@@ -335,7 +337,7 @@ h5 span {
   background-color: #17191e;
   padding: 100px;
   font-size: 20px;
-  color: #383a3f;
+  color: #474a50;
   border-radius: 10px;
   height: 100vh;
 }
@@ -384,6 +386,14 @@ h5 span {
   color: #fff;
   background-color: #17191e;
   overflow: auto;
+}
+
+.authors-list {
+  width: 300px;
+  background-color: #41434d;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
 }
 
 /* ******* Author List ******** */
@@ -457,13 +467,28 @@ h5 span {
   color: #fff;
 }
 
+.borrow-dtl {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.borrow-dtl h6 {
+  font-size: 13px;
+  color: #4f525d;
+}
+.borrow-dtl p {
+  color: #c0a689;
+}
 /* ************** Tables ************** */
 
 .table {
   color: #efeded;
   text-align: left;
   width: 100%;
-  border: 1px solid #c0a689;
+  border: 3px solid #3a3f48;
   margin-top: 20px;
   padding: 20px;
   display: flex;
@@ -474,15 +499,15 @@ h5 span {
 .table-head {
   font-size: large;
   text-transform: uppercase;
-
   width: 100%;
-  border-bottom: 1px solid #c0a689;
+  border-bottom: 1px solid #3a3f48;
 }
+
 .head {
-  color: #c4c1c1;
+  color: #c0a689;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #c0a689;
+  border-bottom: 1px solid #3a3f48;
 }
 
 .table-body {
@@ -491,12 +516,18 @@ h5 span {
   align-items: center;
 }
 
-.select-role {
-  background-color: #bababa;
-  border-radius: 10px;
-  padding: 3px;
+/* Set a fixed width for each column */
+.table-head th,
+.table-body td {
+  width: 20%; /* Adjust the percentage as needed */
+  text-align: center;
 }
 
+.select-role {
+  background-color: #bababa;
+  border-radius: 5px;
+  padding: 3px;
+}
 /* ********* Pagination Button *********** */
 
 .pagination-button {

@@ -88,7 +88,7 @@ export const getBooksRequestThunk = createAsyncThunk('request/get', async (param
     // console.log('==', params)
     const res = await api.get(`/api/books?${params}`)
     console.log('res from requst books thunk', res.data)
-    return res.data
+    return res.data.payload
   } catch (error) {
     console.log('err', error)
   }
@@ -198,7 +198,8 @@ const bookSlice = createSlice({
       })
       .addCase(getBooksRequestThunk.fulfilled, (state, action) => {
         state.isLoading = false
-        state.books = action.payload.payload
+        state.books = action.payload
+        return state
       })
   }
 })

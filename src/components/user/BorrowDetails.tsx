@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
-import { TbHttpDelete } from 'react-icons/tb'
 import { getBorrowsByUserId, returnBorrowedBook } from '../redux/slices/borrowSlice'
 import { useEffect, useState } from 'react'
 
@@ -9,15 +8,30 @@ export default function BorrowDetails() {
   const state = useSelector((state: RootState) => state)
   const borrowState = state.borrows
   const { borrows } = useSelector((state: RootState) => state.borrows)
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  console.log('==========', borrows)
+
   useEffect(() => {
-    const res = dispatch(getBorrowsByUserId())
-    console.log('hayyy res ', res)
+    dispatch(getBorrowsByUserId())
   }, [dispatch])
-  const handleBookDelete = (id: string) => {
-    dispatch(returnBorrowedBook(id))
+
+  const [messages, setMessages] = useState<{ [bookId: string]: string }>({})
+  const [returnedBooks, setReturnedBooks] = useState<string[]>([])
+
+  const handleBookDelete = async (id: string) => {
+    // Check if the book has already been returned
+    if (returnedBooks.includes(id)) {
+      setMessage('Book already returned', id)
+      return
+    }
+
+    const res = await dispatch(returnBorrowedBook(id))
+    setMessage(res.payload.message, id)
+
+    setReturnedBooks((prevReturnedBooks) => [...prevReturnedBooks, id])
+    dispatch(getBorrowsByUserId())
+  }
+
+  const setMessage = (message: string, bookId: string) => {
+    setMessages((prevMessages) => ({ ...prevMessages, [bookId]: message }))
   }
 
   return (
@@ -25,25 +39,30 @@ export default function BorrowDetails() {
       <ul className="books">
         {borrows.length > 0 &&
           borrows.map((book) => (
-            <li key={book._id} className="book">
+            <li key={book._id} className={`book ${book.returnDate ? 'sold-out' : ''}`}>
               <img src={book.bookId.image} alt={book._id} />
-              <h6>Borrow Date:</h6>
-              <h6>{book.borrowDate}</h6>
-              <h6>Borrow Date:</h6>
-              <h6>{book.dueDate}</h6>
-              <div className="return-btn">
-                <button
-                  onClick={() => {
-                    handleBookDelete(book._id)
-                  }}>
-                  Return
-                </button>
+              <div className="borrow-dtl">
+                <p>Borrow Date:</p>
+                <h6>{book.borrowDate}</h6>
+                <p>Due Date:</p>
+                <h6>{book.dueDate}</h6>
+                {book.returnDate && (
+                  <>
+                    <p style={{ color: '#750505' }}>Return Date:</p>
+                    <h6>{book.returnDate}</h6>
+                  </>
+                )}
               </div>
+              <div className="return-btn">
+                {!book.returnDate && (
+                  <button onClick={() => handleBookDelete(book._id)}>Return</button>
+                )}
+              </div>
+              {messages[book._id] && <p style={{ color: '#green' }}>{messages[book._id]}</p>}
             </li>
           ))}
       </ul>
-      {borrowState.error && <p style={{ color: 'red' }}>{borrowState.error}</p>}
-      {message && <p style={{ color: 'green' }}>{message}</p>}
+      {borrowState.error && <p style={{ color: '#750505' }}>{borrowState.error}</p>}
     </div>
   )
 }

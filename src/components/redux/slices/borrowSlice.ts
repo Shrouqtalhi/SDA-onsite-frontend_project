@@ -13,25 +13,36 @@ export const fetchBorrows = createAsyncThunk('users/fetchBorrows', async () => {
 // Create
 export const borrowBookThunk = createAsyncThunk(
   'users/post',
-  async ({
-    borrowDate,
-    dueDate,
-    bookId,
-    userId
-  }: {
-    borrowDate: string
-    dueDate: string
-    bookId: string
-    userId: string
-  }) => {
-    const numberOfDays = calculateDaysBetweenDates(borrowDate, dueDate)
-
-    const res = await api.post('/api/borrows', {
-      numberOfDays,
+  async (
+    {
+      borrowDate,
+      dueDate,
       bookId,
       userId
-    })
-    return res.data
+    }: {
+      borrowDate: string
+      dueDate: string
+      bookId: string
+      userId: string
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const numberOfDays = calculateDaysBetweenDates(borrowDate, dueDate)
+
+      const res = await api.post('/api/borrows', {
+        numberOfDays,
+        bookId,
+        userId
+      })
+      return res.data
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data.msg)
+        return rejectWithValue(error.response?.data.msg)
+      }
+      console.log(error)
+    }
   }
 )
 
@@ -44,11 +55,10 @@ export const getBorrowsByUserId = createAsyncThunk('users/getById', async () => 
 
 export const returnBorrowedBook = createAsyncThunk(
   'users/return',
-  async (id: Book['_id'], { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const res = await api.put(`/api/borrows/return/${id}`)
-      console.log(res.data.payload)
-      return res.data.payload
+      return res.data
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data.msg)
@@ -57,6 +67,16 @@ export const returnBorrowedBook = createAsyncThunk(
     }
   }
 )
+
+export const deleteBorrwedBook = createAsyncThunk('users/delete', async (id: string) => {
+  try {
+    const res = await api.delete(`/api/borrows/${id}`)
+    console.log('delete', res)
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 const initialState: InitialStateBorrows = {
   borrows: [],
@@ -101,21 +121,36 @@ const borrowSlice = createSlice({
         state.isLoading = false
         state.borrows = action.payload
       })
+      .addCase(borrowBookThunk.rejected, (state, action) => {
+        state.isLoading = false
+        console.log(action.payload)
+        if (typeof action.payload === 'string') {
+          state.error = action.payload
+          return
+        }
+        state.error = 'An error occured'
+      })
       .addCase(getBorrowsByUserId.fulfilled, (state, action) => {
         state.isLoading = false
         state.borrows = action.payload
-        console.log(action.payload)
+      })
+      .addCase(deleteBorrwedBook.fulfilled, (state, action) => {
+        state.isLoading = false
+        const deletedBook = action.payload
+        state.borrows = state.borrows.filter((borrow) => borrow._id !== deletedBook)
+        console.log('Book returned successfully:', deletedBook)
       })
       .addCase(returnBorrowedBook.fulfilled, (state, action) => {
         state.isLoading = false
-        const returnedBookId = action.payload.bookId
-        console.log('return', returnedBookId)
-
-        // state.borrowbooks = state.borrowbooks.filter((book) => book._id !== returnedBookId)
-
-        state.borrows = state.borrows.filter((borrow) => borrow.bookId !== returnedBookId)
-
-        console.log('Book returned successfully:', returnedBookId)
+        const returnedBookId = action.payload
+        const updatedBorrows = state.borrows.map((borrow) => {
+          if (borrow._id === returnedBookId) {
+            return returnedBookId
+          }
+          return borrow
+        })
+        state.borrows = updatedBorrows
+        return state
       })
   }
 })

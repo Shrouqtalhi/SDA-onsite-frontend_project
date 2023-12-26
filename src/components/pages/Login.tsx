@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { ROLES } from '../../constants'
-import api from '../../api'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -35,10 +34,6 @@ export default function Login() {
     dispatch(usersLogin(credentials)).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         const user = res.payload.user
-        const token = res.payload.token
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user))
-        api.defaults.headers['Authorization'] = `Bearer ${token}`
 
         if (user.role === ROLES.ADMIN) {
           navigate(`/admin/books`)

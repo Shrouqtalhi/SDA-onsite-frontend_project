@@ -95,7 +95,7 @@ export default function EditBook() {
         />
 
         <label htmlFor="discription" className="form-lable">
-          Price
+          Price:
         </label>
 
         <input
@@ -106,8 +106,11 @@ export default function EditBook() {
           onChange={handleChangeNumber}
         />
 
+        <label htmlFor="author-lisr" className="form-lable">
+          Authors List:
+        </label>
         <select
-          className="select-role"
+          className="authors-list"
           name="author"
           title="author"
           onChange={handleChange}

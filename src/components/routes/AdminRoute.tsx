@@ -6,5 +6,6 @@ import { ROLES } from '../../constants'
 
 export const AdminRoute = () => {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.users)
-  return isLoggedIn && userData?.role === ROLES.ADMIN ? <Outlet /> : <Login />
+  const isAdmin = userData?.role === ROLES.ADMIN
+  return isLoggedIn && isAdmin ? <Outlet /> : <Login />
 }

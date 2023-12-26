@@ -1,16 +1,23 @@
 import { ChangeEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { AppDispatch, RootState } from './redux/store'
-import { fetchBooks, searchBook } from './redux/slices/bookSlice'
+import { useDispatch } from 'react-redux'
+import { Link, SetURLSearchParams } from 'react-router-dom'
+import { AppDispatch } from './redux/store'
+import { fetchBooks, getBooksRequestThunk } from './redux/slices/bookSlice'
 
-export default function Search() {
+type Props = {
+  searchParams: URLSearchParams
+  setSearchParams: SetURLSearchParams
+}
+
+export default function Search({ searchParams, setSearchParams }: Props) {
   const dispatch: AppDispatch = useDispatch()
 
-  const { search } = useSelector((state: RootState) => state.books)
+  const title = searchParams.get('title') || ''
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchBook(e.target.value))
+    searchParams.set('title', e.target.value)
+    setSearchParams(searchParams)
+    dispatch(getBooksRequestThunk(searchParams.toString()))
   }
 
   const handleGetAllBooks = () => {
@@ -21,7 +28,7 @@ export default function Search() {
     <div className="search-filter-bar">
       <div className="search-input">
         <p>Search:</p>
-        <input type="search" value={search} onChange={handleSearch} placeholder="Search here" />
+        <input type="search" value={title} onChange={handleSearch} placeholder="Search here" />
       </div>
 
       <div className="user-btn">

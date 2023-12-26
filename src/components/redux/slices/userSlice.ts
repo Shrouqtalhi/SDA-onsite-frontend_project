@@ -107,10 +107,16 @@ export const usersLogin = createAsyncThunk(
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const res = await api.post('/api/users/login', credentials)
+      const token = res.data.token
+      const user = res.data.user
+
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
+
       return res.data
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response?.data.msg[0].message)
         return rejectWithValue(error.response?.data.msg[0].message || error.response?.data.msg)
       }
     }
@@ -212,10 +218,12 @@ const usersSlice = createSlice({
       //   state.error = null
       // })
       .addCase(usersLogin.fulfilled, (state, action) => {
+        const user = action.payload.user
+
         state.isLoading = false
-        state.foundUser = action.payload.user
-        state.isLoggedIn = isLoggedIn
-        state.userData = storedUser
+        state.foundUser = user
+        state.isLoggedIn = true
+        state.userData = user
       })
       .addCase(usersLogin.rejected, (state, action) => {
         state.isLoading = false
