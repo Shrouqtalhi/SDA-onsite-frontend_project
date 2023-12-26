@@ -109,8 +109,9 @@ const borrowSlice = createSlice({
       .addCase(returnBorrowedBook.fulfilled, (state, action) => {
         state.isLoading = false
         const returnedBookId = action.payload.bookId
+        console.log('return', returnedBookId)
 
-        state.borrowbooks = state.borrowbooks.filter((book) => book._id !== returnedBookId)
+        // state.borrowbooks = state.borrowbooks.filter((book) => book._id !== returnedBookId)
 
         state.borrows = state.borrows.filter((borrow) => borrow.bookId !== returnedBookId)
 

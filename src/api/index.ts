@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { getToken } from '../utils/token'
 
-const baseURL = process.env.BACKEND_ORIGIN
+const BASE_URL = import.meta.env.VITE_BACKEND_ORIGIN || 'http://localhost:5002'
 const api = axios.create({
-  baseURL
+  baseURL: BASE_URL
 })
 
 const token = getToken()
